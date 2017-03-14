@@ -11,6 +11,12 @@ Skeleton of participants module
 
 # Authors
 
-- Herminio García González (@herminiogg)
-- Jose Emilio Labra Gayo (@labra)
+- Ramón Sobrino Llorca (UO250817)
 
+- Pablo Rodriguez Alvarez (UO236935)
+
+- Rodrigo Benjy Rojas Nakamura (UO242509)
+
+- Javier Valduvieco García (UO239884)
+
+- Alejandro Sáez Morollón (UO198755)
