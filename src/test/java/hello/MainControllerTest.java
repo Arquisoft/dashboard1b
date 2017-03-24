@@ -26,12 +26,15 @@ public class MainControllerTest {
     @Value("${local.server.port}")
     private int port;
 
+	@Value("${local.server.ip}")
+    private String server;
+
     private URL base;
 	private RestTemplate template;
 
 	@Before
 	public void setUp() throws Exception {
-		this.base = new URL("http://localhost:" + port + "/");
+		this.base = new URL("http://"+server+":" + port + "/");
 		template = new TestRestTemplate();
 	}
 
