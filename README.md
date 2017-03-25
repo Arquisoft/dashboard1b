@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/Arquisoft/dashboard1b.svg?branch=master)](https://travis-ci.org/Arquisoft/dashboard1b)
 [![codecov](https://codecov.io/gh/Arquisoft/dashboard1b/branch/master/graph/badge.svg)](https://codecov.io/gh/Arquisoft/dashboard1b)
 [![Dependency Status](https://www.versioneye.com/user/projects/58d64f43dcaf9e0041b5bfb8/badge.svg?style=flat)](https://www.versioneye.com/user/projects/58d64f43dcaf9e0041b5bfb8)
+[![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg)]()
 
 # dashboard1b
 
