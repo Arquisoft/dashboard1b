@@ -24,10 +24,9 @@ public class Ciudadano {
 	private String password;
 	private boolean privilegios;
 	
-	public Ciudadano(Long id, String nombre, String apellidos, String email, Date fechaNacimiento, String residencia,
+	public Ciudadano(String nombre, String apellidos, String email, Date fechaNacimiento, String residencia,
 			String nacionalidad, String dni, String password, boolean privilegios) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
