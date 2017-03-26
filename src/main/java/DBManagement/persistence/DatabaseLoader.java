@@ -1,4 +1,4 @@
-package persistence;
+package DBManagement.persistence;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import model.Ciudadano;
+import DBManagement.model.Ciudadano;
 
 @Component
 public class DatabaseLoader {

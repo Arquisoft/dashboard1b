@@ -10,16 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import impl.GetParticipantDB;
-import model.Ciudadano;
-import persistence.CiudadanoRepository;
+import DBManagement.model.Ciudadano;
+import DBManagement.persistence.CiudadanoRepository;
 
 @Controller
 public class ControladorHTML {
 
-	@SuppressWarnings("unused")
-	@Autowired
-	private GetParticipantDB getParticipantDB;
 	@Autowired
 	private CiudadanoRepository repositorio;
 	
@@ -28,10 +24,6 @@ public class ControladorHTML {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/changeInfo", method = RequestMethod.GET)
-	public String getHTMLChange(Model modelo){
-		return "changeInfo";
-	}
 	
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public String postHTML(@RequestBody String parametros, Model modelo){

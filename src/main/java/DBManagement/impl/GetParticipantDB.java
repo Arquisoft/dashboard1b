@@ -1,11 +1,11 @@
-package impl;
+package DBManagement.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import DBManagement.GetParticipant;
-import model.Ciudadano;
-import persistence.CiudadanoRepository;
+import DBManagement.model.Ciudadano;
+import DBManagement.persistence.CiudadanoRepository;
 import participants.ParticipantsLogin;
 
 @Component

@@ -1,6 +1,6 @@
 package DBManagement;
 
-import model.Ciudadano;
+import DBManagement.model.Ciudadano;
 import participants.ParticipantsLogin;
 
 /**
