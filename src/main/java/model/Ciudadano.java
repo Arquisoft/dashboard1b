@@ -2,7 +2,17 @@ package model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+
+@Entity
 public class Ciudadano {
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 
 	private String nombre;
 	private String apellidos;
@@ -14,10 +24,10 @@ public class Ciudadano {
 	private String password;
 	private boolean privilegios;
 	
-	
-	public Ciudadano(String nombre, String apellidos, String email, Date fechaNacimiento, String residencia,
-			String nacionalidad, String dni, String password) {
+	public Ciudadano(Long id, String nombre, String apellidos, String email, Date fechaNacimiento, String residencia,
+			String nacionalidad, String dni, String password, boolean privilegios) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
@@ -26,8 +36,10 @@ public class Ciudadano {
 		this.nacionalidad = nacionalidad;
 		this.dni = dni;
 		this.password = password;
+		this.privilegios = privilegios;
 	}
-
+	
+	//Constructor vacio para JPA
 	Ciudadano(){}
 
 	public String getNombre() {
@@ -94,17 +106,15 @@ public class Ciudadano {
 		this.password = password;
 	}
 
-	public boolean getPrivilegios() {
+	public boolean isPrivilegios() {
 		return privilegios;
 	}
 
 	@Override
 	public String toString() {
-		return "Ciudadano [nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email + ", fechaNacimiento="
-				+ fechaNacimiento + ", residencia=" + residencia + ", nacionalidad=" + nacionalidad + ", dni=" + dni
-				+ ", password=" + password + ", privilegios=" + privilegios + "]";
+		return "Ciudadano [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
+				+ ", fechaNacimiento=" + fechaNacimiento + ", residencia=" + residencia + ", nacionalidad="
+				+ nacionalidad + ", dni=" + dni + ", password=" + password + ", privilegios=" + privilegios + "]";
 	}
-	
-	
 
 }
