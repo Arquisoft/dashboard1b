@@ -15,7 +15,7 @@ Skeleton of participants module
 
 - Pablo Rodriguez Alvarez (UO236935)
 
-- Rodrigo Benjy Rojas Nakamura (UO242509)
+- Rodrigo Benjy Rojas Nakamura (UO245509)
 
 - Javier Valduvieco García (UO239884)
 
