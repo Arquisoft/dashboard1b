@@ -7,6 +7,9 @@
 
 [![Join the chat at https://gitter.im/Arquisoft/participants0](https://badges.gitter.im/Arquisoft/participants0.svg)](https://gitter.im/Arquisoft/participants0?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+![codecov.io](https://codecov.io/github/Arquisoft/dashboard1b/branch.svg?branch=master)
+
+
 Skeleton of participants module
 
 # Authors
