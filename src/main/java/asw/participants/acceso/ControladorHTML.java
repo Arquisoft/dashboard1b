@@ -52,13 +52,11 @@ public class ControladorHTML {
 		String email = p[0].split("=")[1];
 		email = email.replace("%40", "@");
 		String password = p[1].split("=")[1];
-		System.out.println("Contraseña que llega" + password);
 
 		//Comprobar los datos
 
 		try{
 			Ciudadano ciudadano = repositorio.findByEmail(email);
-			System.out.println(ciudadano.toString());
 			if (ciudadano!= null)
 			{
 				if(!ciudadano.getEmail().equals(email))
@@ -67,7 +65,6 @@ public class ControladorHTML {
 					return "error";
 				}
 
-				System.out.println("Contraseña que sale de la base: " + ciudadano.getPassword());
 				if(!ciudadano.getPassword().equals(password))
 				{
 					modelo.addAttribute("error", "La contraseña no coincide con la del usuario.");
