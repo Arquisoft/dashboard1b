@@ -1,4 +1,4 @@
-package participants.errores;
+package asw.participants.acceso.errores;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

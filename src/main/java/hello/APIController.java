@@ -11,5 +11,4 @@ public class APIController {
     public UserInfo user() {
         return new UserInfo("pepe",0);
     }
-
 }

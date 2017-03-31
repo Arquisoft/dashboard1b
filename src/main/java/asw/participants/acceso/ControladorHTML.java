@@ -1,4 +1,4 @@
-package participants;
+package asw.participants.acceso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import DBManagement.model.Ciudadano;
-import DBManagement.persistence.CiudadanoRepository;
+import asw.DBManagement.model.Ciudadano;
+import asw.DBManagement.persistence.CiudadanoRepository;
 
 @Controller
 public class ControladorHTML {
@@ -67,7 +67,6 @@ public class ControladorHTML {
 					return "error";
 				}
 
-				
 				if(ciudadano != null){
 					if(ciudadano.isPrivilegios())
 						return "userPriv";

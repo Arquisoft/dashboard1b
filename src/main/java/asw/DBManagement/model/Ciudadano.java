@@ -1,4 +1,4 @@
-package DBManagement.model;
+package asw.DBManagement.model;
 
 import java.util.Date;
 
