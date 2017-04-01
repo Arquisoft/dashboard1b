@@ -1,8 +1,6 @@
-package hello.listeners;
+package asw.listeners;
 
-import hello.MainController;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import javax.annotation.ManagedBean;
