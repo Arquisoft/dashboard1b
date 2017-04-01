@@ -10,14 +10,13 @@ import org.springframework.kafka.annotation.KafkaListener;
 import asw.DBManagement.model.Opinion;
 
 @ManagedBean
-public class NewOpinionListener implements ApplicationEventPublisherAware{
-	
+public class DownvoteSugerenceListener implements ApplicationEventPublisherAware{
 private static final Logger logger = Logger.getLogger(NewSugerenceListener.class);
     
     private ApplicationEventPublisher publisher;
 
-    @KafkaListener(id="newOpinion", topics = KafkaTopics.NEW_OPINION)
-    public void listen(Opinion data) {
+    @KafkaListener(id="downvoteSugerence", topics = KafkaTopics.DOWNVOTE_SUGERENCE)
+    public void listen(String data) {
     	
     	publisher.publishEvent(data);
     	
@@ -30,5 +29,4 @@ private static final Logger logger = Logger.getLogger(NewSugerenceListener.class
 		this.publisher = eventPublisher;
 		
 	}
-	
 }
