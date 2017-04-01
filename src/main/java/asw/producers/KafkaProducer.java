@@ -14,7 +14,6 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 @ManagedBean
-@Configurable
 @EnableScheduling
 public class KafkaProducer {
 
