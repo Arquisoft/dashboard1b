@@ -12,7 +12,7 @@ public class Ciudadano {
 	
 	@Id
 	@GeneratedValue
-	private Long id;
+	private long idCiudadano;
 
 	private String nombre;
 	private String apellidos;
@@ -111,7 +111,7 @@ public class Ciudadano {
 
 	@Override
 	public String toString() {
-		return "Ciudadano [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
+		return "Ciudadano [id=" + idCiudadano + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
 				+ ", fechaNacimiento=" + fechaNacimiento + ", residencia=" + residencia + ", nacionalidad="
 				+ nacionalidad + ", dni=" + dni + ", password=" + password + ", privilegios=" + privilegios + "]";
 	}
