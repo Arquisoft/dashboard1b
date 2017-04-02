@@ -1,9 +1,8 @@
 package asw.DBManagement.persistence;
 
+import asw.DBManagement.model.Comentario;
 import org.springframework.data.repository.CrudRepository;
 
-import asw.DBManagement.model.Ciudadano;
-
-public interface ComentarioRepository extends CrudRepository<Ciudadano, Long> {
+public interface ComentarioRepository extends CrudRepository<Comentario, Long> {
 
 }
