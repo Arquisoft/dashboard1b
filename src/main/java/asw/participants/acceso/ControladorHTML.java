@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -112,7 +113,7 @@ public class ControladorHTML {
 
 	@Autowired
 	private EstadisticaService estatService;
-
+	
 
 
 	public List<Estadistica> popularidadSugerencia(List<Sugerencia> sugerencia) {
@@ -121,10 +122,12 @@ public class ControladorHTML {
 
 
 	@RequestMapping(path="/userPriv", method=RequestMethod.GET)
+	@EventListener(condition = "event.listenerId.startsWith('newSugerence-')")
 	public String popularidadSugerencia(@RequestBody String parametros, Model modelo) {
 		//metodo que trae una lista usuarios
 		List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
 		//Implementar metodo para sacar la lista de usuarios de una misma categoria
+		
 		sugerencias.add(new Sugerencia("Pepe", 25, 8, 0));
 		sugerencias.add(new Sugerencia("Manolo", 45, 89, 69));
 		sugerencias.add(new Sugerencia("Paco", 14, 87, 45));
@@ -135,4 +138,8 @@ public class ControladorHTML {
 		modelo.addAttribute("estadisticas",estadisticas);
 		return "userPriv";
 	}
+	
+	@RequestMapping("/userPriv")
+	@EventListener(condition = "event.listenerId.startsWith('newSugerence-')")
+	public void 
 }
