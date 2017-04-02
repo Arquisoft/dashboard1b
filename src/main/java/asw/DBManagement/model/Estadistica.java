@@ -1,18 +1,17 @@
 package asw.DBManagement.model;
 
-import java.util.List;
+import java.util.Map;
 
 public class Estadistica {
 	
 	private String titulo;
-	private List<String> Campos;
-	private List<Double> Valores;
+	private long idSugerencia;
+	private Map<String,Double> campos;
 	
-	public Estadistica(String titulo, List<String> campos, List<Double> valores) {
+	public Estadistica(String titulo, Map<String,Double> campos) {
 		super();
 		this.titulo = titulo;
-		Campos = campos;
-		Valores = valores;
+		this.campos = campos;
 	}
 	
 	public String getTitulo() {
@@ -21,16 +20,23 @@ public class Estadistica {
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-	public List<String> getCampos() {
-		return Campos;
+
+	public Map<String, Double> getCampos() {
+		return campos;
 	}
-	public void setCampos(List<String> campos) {
-		Campos = campos;
+
+	public void setCampos(Map<String, Double> campos) {
+		this.campos = campos;
 	}
-	public List<Double> getValores() {
-		return Valores;
+
+	public long getIdSugerencia() {
+		return idSugerencia;
 	}
-	public void setValores(List<Double> valores) {
-		Valores = valores;
+
+	public void setIdSugerencia(long idSugerencia) {
+		this.idSugerencia = idSugerencia;
 	}
+	
+	
+
 }
