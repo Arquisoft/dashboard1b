@@ -31,12 +31,11 @@
 			<th>Nombre</th>
 			<th>Comentarios</th>
 			<th>Apoyos</th>
-			<th>En contra</th>
 		</tr>
 		<tr th:each="est : ${estadisticas}">
 			<td th:text="${est.titulo}">Onions</td>
-			<td th:text="${est.campos.get(Comentarios)}">2.41</td>
-			<td th:text="${est.campos.get(Apoyos)}">2.41</td>
+			<td th:text="${est.campos.get('Comentarios')}">2.41</td>
+			<td th:text="${est.campos.get('Apoyos')}">2.41</td>
 		</tr>
 	</table>
 

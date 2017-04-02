@@ -133,11 +133,10 @@ public class ControladorHTML {
 		List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
 		//Implementar metodo para sacar la lista de usuarios de una misma categoria
 		Date fechaActual = new Date();
-		long a = 1;
-		////sugerencias.add(new Sugerencia(a, "Titulo 1", fechaActual, true, 50));
-		////sugerencias.add(new Sugerencia(a, "Titulo 2", fechaActual, false, 25));
-		//sugerencias.add(new Sugerencia(a, "Titulo 3", fechaActual, false, 4));
-		//sugerencias.add(new Sugerencia(a, "Titulo 4", fechaActual, true, 12));
+		sugerencias.add(new Sugerencia("Titulo 1", fechaActual, true, 50));
+		sugerencias.add(new Sugerencia("Titulo 2", fechaActual, false, 25));
+		sugerencias.add(new Sugerencia("Titulo 3", fechaActual, false, 4));
+		sugerencias.add(new Sugerencia("Titulo 4", fechaActual, true, 12));
 		System.out.println("Pasa por aqui ");
 
 		List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);

@@ -12,17 +12,15 @@ public class Sugerencia {
 
 	@Id
 	@GeneratedValue
-	private Long IdSugerencia;
-	private Long idCiudadano;
+	private long Id;
 	private String titulo;
 	private Date fecha;
 	private boolean aprobacion;
 	private int votos;
 	
+	@ManyToOne private Ciudadano ciudadano;
 	
-	Sugerencia(){}
-	
-	public Sugerencia(long idCiudadano, String titulo, Date fecha, boolean aprobacion, int votos) {
+	public Sugerencia(String titulo, Date fecha, boolean aprobacion, int votos) {
 		super();
 		this.titulo = titulo;
 		this.fecha = fecha;
@@ -30,21 +28,18 @@ public class Sugerencia {
 		this.votos = votos;
 	}
 
-	public Long getIdSugerencia() {
-		return IdSugerencia;
+	public Ciudadano getProveedor(){
+		return ciudadano;
 	}
-
-	public void setIdSugerencia(Long idSugerencia) {
-		IdSugerencia = idSugerencia;
+	
+	void _setCiudadano(Ciudadano ciudadano){
+		this.ciudadano = ciudadano;
 	}
 	
 	public long getId() {
 		return Id;
 	}
 
-	public void setIdCiudadano(Long idCiudadano) {
-		this.idCiudadano = idCiudadano;
-	}
 
 	public String getTitulo() {
 		return titulo;

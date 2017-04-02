@@ -16,15 +16,6 @@ public class Ciudadano {
 	@Id
 	@GeneratedValue
 	private Long id;		
-
-	public Long getIdCiudadano() {
-		return idCiudadano;
-	}
-
-	public void setIdCiudadano(Long idCiudadano) {
-		this.idCiudadano = idCiudadano;
-	}
-
 	public void setPrivilegios(boolean privilegios) {
 		this.privilegios = privilegios;
 	}
