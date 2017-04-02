@@ -24,6 +24,7 @@ import asw.DBManagement.model.Estadistica;
 import asw.DBManagement.model.Sugerencia;
 import asw.DBManagement.persistence.CiudadanoRepository;
 import asw.estadistica.EstadisticaService;
+import asw.listeners.SugerenceInfo;
 
 @Controller
 public class ControladorHTML {
@@ -152,11 +153,13 @@ public class ControladorHTML {
 		return "userPriv";
 	}
 	
-	@EventListener(condition = "event.listenerId.startsWith('newSugerence-')")
-	public void newSugerence(Sugerencia data){
+	@RequestMapping( value= "userPriv")
+	@EventListener
+	public void newSugerence(SugerenceInfo data){
+		
+		System.out.println("Evento escuchado!");
 		SseEventBuilder newSugerenceEvent = SseEmitter.event().name("newSugerence").data(data);
 		sendEvent(newSugerenceEvent);
-		
 	}
 	
 	@EventListener( condition = "event.listenerId.startsWith('newComentary-')")

@@ -29,6 +29,7 @@ public class KafkaListenerFactory {
         factory.setConsumerFactory(consumerFactory());
         factory.setConcurrency(3);
         factory.getContainerProperties().setPollTimeout(3000);
+        factory.setMessageConverter(new StringJsonMessageConverter());
         return factory;
     }
 

@@ -14,7 +14,8 @@
 		 
 		 source.addEventListener('newSugerence', function(event){
 			 sseData = JSON.parse(event.data);
-	         table.rows.add(sseData).draw()
+			 var t = document.getElementById("table");
+	         t.rows.add(sseData).draw();
 		 });
 		
 		// Reconnect if the connection fails
@@ -31,7 +32,7 @@
 
 <body>
 	<h1>Popularidad de las sugerencias</h1>
-	<table id="table"border="1">
+	<table id="table" border="1">
 		<tr>
 			<th>Nombre</th>
 			<th>Comentarios</th>

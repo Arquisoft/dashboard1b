@@ -20,13 +20,14 @@ public class NewSugerenceListener implements ApplicationEventPublisherAware{
     
     private ApplicationEventPublisher publisher;
 
-    @KafkaListener(id= "newSugerence", topics = KafkaTopics.NEW_SUGERENCE)
-    public void listen(String data) {
-    	
+    @KafkaListener(topics = KafkaTopics.NEW_SUGERENCE)
+    public void listen(SugerenceInfo data) {
+    	System.out.println("Escuche!");
     	publisher.publishEvent(data);
     	
         logger.info("New message received: \"" + data + "\"");
     }
+    
     
 
 	@Override
