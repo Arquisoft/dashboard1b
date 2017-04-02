@@ -21,25 +21,22 @@ import java.util.List;
 public class MainController {
 
     private static final Logger logger = Logger.getLogger(MainController.class);
-    private List<SseEmitter> sseEmitters = Collections.synchronizedList(new ArrayList<>());
 
     @RequestMapping("/")
     public String landing(Model model) {
         return "login";
     }
     
-    @RequestMapping("/userPriv")
-    @EventListener(condition = "event.listenerId.")
-    public ResponseBodyEmitter newSugerence(Sugerencia data){
-    	final SseEmitter emitter = new SseEmitter();
-    	try {
-			emitter.send(data, MediaType.APPLICATION_JSON);
-		} catch (IOException e) {
-			e.printStackTrace();
-            emitter.completeWithError(e);
-		}
-    	emitter.complete();
-    	return emitter;
-    }
+//    public ResponseBodyEmitter newSugerence(String data){
+//    	final SseEmitter emitter = new SseEmitter();
+//    	try {
+//			emitter.send(data, MediaType.APPLICATION_JSON);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//            emitter.completeWithError(e);
+//		}
+//    	emitter.complete();
+//    	return emitter;
+//    }
     
 }

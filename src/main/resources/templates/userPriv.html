@@ -6,16 +6,14 @@
 <title>Popularidad de las sugerencias</title>
 <script type="text/javascript">
 	var connect = function() {
-		var source = new EventSource('/register');
+		var source = new EventSource('/userPriv');
 		 // Handle correct opening of connection
         source.addEventListener('open', function (e) {
             console.log('Connected.');
         });
 		 
 		 source.addEventListener('newSugerence', function(event){
-			 sseData = JSON.parse(event.data);
-			 var t = document.getElementById("table");
-	         t.rows.add(sseData).draw();
+			 location.reload();
 		 });
 		
 		// Reconnect if the connection fails

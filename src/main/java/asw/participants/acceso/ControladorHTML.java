@@ -24,7 +24,6 @@ import asw.DBManagement.model.Estadistica;
 import asw.DBManagement.model.Sugerencia;
 import asw.DBManagement.persistence.CiudadanoRepository;
 import asw.estadistica.EstadisticaService;
-import asw.listeners.SugerenceInfo;
 
 @Controller
 public class ControladorHTML {
@@ -34,6 +33,13 @@ public class ControladorHTML {
 	
 	@Autowired
 	private CiudadanoRepository repositorio;
+	
+	private static List<Sugerencia> sugerencias = new ArrayList<>();
+	
+	public static List<Sugerencia> getSugerencias(){
+		return sugerencias;
+	}
+	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getHTML(Model modelo){
@@ -98,26 +104,26 @@ public class ControladorHTML {
 		}
 	}
 
-	private int edad(String fecha_nac) {     
-
-		Date fechaActual = new Date();
-		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-		String hoy = formato.format(fechaActual);
-		String[] dat1 = fecha_nac.split("-");
-		String[] dat2 = hoy.split("-");
-		int edad = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
-		int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
-		if (mes < 0) {
-			edad = edad - 1;
-		} else if (mes == 0) {
-			int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
-			if (dia > 0) {
-				edad = edad - 1;
-			}
-		}
-		return edad;
-
-	}
+//	private int edad(String fecha_nac) {     
+//
+//		Date fechaActual = new Date();
+//		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+//		String hoy = formato.format(fechaActual);
+//		String[] dat1 = fecha_nac.split("-");
+//		String[] dat2 = hoy.split("-");
+//		int edad = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+//		int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
+//		if (mes < 0) {
+//			edad = edad - 1;
+//		} else if (mes == 0) {
+//			int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+//			if (dia > 0) {
+//				edad = edad - 1;
+//			}
+//		}
+//		return edad;
+//
+//	}
 
 	@Autowired
 	private EstadisticaService estatService;
@@ -135,11 +141,11 @@ public class ControladorHTML {
 		SseEmitter emitter = new SseEmitter();
 
 	    synchronized (sseEmitters) {
+	    	System.out.println("añadi emitter");
 	        sseEmitters.add(emitter);
 	    }
 	    emitter.onCompletion(() -> sseEmitters.remove(emitter));
 		//metodo que trae una lista usuarios
-		List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
 		//Implementar metodo para sacar la lista de usuarios de una misma categoria
 		Date fechaActual = new Date();
 		sugerencias.add(new Sugerencia("Titulo 1", fechaActual, true, 50));
@@ -155,26 +161,30 @@ public class ControladorHTML {
 	
 	@RequestMapping( value= "userPriv")
 	@EventListener
-	public void newSugerence(SugerenceInfo data){
+	public void newSugerence(String data){
 		
 		System.out.println("Evento escuchado!");
 		SseEventBuilder newSugerenceEvent = SseEmitter.event().name("newSugerence").data(data);
 		sendEvent(newSugerenceEvent);
 	}
 	
-	@EventListener( condition = "event.listenerId.startsWith('newComentary-')")
-	public void newComentary(Comentario data){
+	public class SugerenciaTabla{
+		private String titulo;
+	}
+	
+	@EventListener
+	public void newComentary(String data){
 		SseEventBuilder newComentaryEvent = SseEmitter.event().name("newComentary").data(data);
 		sendEvent(newComentaryEvent);
 	}
 	
-	@EventListener( condition = "event.listenerId.startWith('upvoteSugerence-')")
+	@EventListener
 	public void upvoteSugerence(String data){
 		SseEventBuilder upvoteSugerenceEvent = SseEmitter.event().name("upvoteSugerence").data(data);
 		sendEvent(upvoteSugerenceEvent);
 	}
 	
-	@EventListener( condition = "event.listenerId.startWith('downvoteSugerence-')")
+	@EventListener
 	public void downvoteSugerence(String data){
 		SseEventBuilder downvoteSugerenceEvent = SseEmitter.event().name("downvoteSugerence").data(data);
 		sendEvent(downvoteSugerenceEvent);
@@ -184,7 +194,8 @@ public class ControladorHTML {
 		synchronized (sseEmitters) {
 			for(SseEmitter emitter: sseEmitters){
 				try {
-					emitter.send(event, MediaType.APPLICATION_JSON);
+					System.out.println("Enviando el evento");
+					emitter.send(event);
 				} catch (IOException e) {
 					e.printStackTrace();
 					
