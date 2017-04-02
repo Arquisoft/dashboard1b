@@ -1,26 +1,22 @@
-package hello.listeners;
+package asw.listeners;
+
+import javax.annotation.ManagedBean;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.kafka.annotation.KafkaListener;
 
-import asw.DBManagement.model.Sugerencia;
+import asw.DBManagement.model.Opinion;
 
-import javax.annotation.ManagedBean;
-
-/**
- * Created by herminio on 28/12/16.
- */
 @ManagedBean
-public class NewSugerenceListener implements ApplicationEventPublisherAware{
-
-    private static final Logger logger = Logger.getLogger(NewSugerenceListener.class);
+public class DownvoteSugerenceListener implements ApplicationEventPublisherAware{
+private static final Logger logger = Logger.getLogger(NewSugerenceListener.class);
     
     private ApplicationEventPublisher publisher;
 
-    @KafkaListener(id= "newSugerence", topics = KafkaTopics.NEW_SUGERENCE)
-    public void listen(Sugerencia data) {
+    @KafkaListener(id="downvoteSugerence", topics = KafkaTopics.DOWNVOTE_SUGERENCE)
+    public void listen(String data) {
     	
     	publisher.publishEvent(data);
     	

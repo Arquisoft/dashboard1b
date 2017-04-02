@@ -1,22 +1,26 @@
-package hello.listeners;
-
-import javax.annotation.ManagedBean;
+package asw.listeners;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
+import org.springframework.http.MediaType;
 import org.springframework.kafka.annotation.KafkaListener;
 
-import asw.DBManagement.model.Opinion;
+import asw.DBManagement.model.Sugerencia;
 
+import javax.annotation.ManagedBean;
+
+/**
+ * Created by herminio on 28/12/16.
+ */
 @ManagedBean
-public class SugerenceVotingPhaseListener implements ApplicationEventPublisherAware{
+public class NewSugerenceListener implements ApplicationEventPublisherAware{
 
-private static final Logger logger = Logger.getLogger(NewSugerenceListener.class);
+    private static final Logger logger = Logger.getLogger(NewSugerenceListener.class);
     
     private ApplicationEventPublisher publisher;
 
-    @KafkaListener(id="sugerenceVotingPhase", topics = KafkaTopics.SUGERENCE_VOTING_PHASE)
+    @KafkaListener(id= "newSugerence", topics = KafkaTopics.NEW_SUGERENCE)
     public void listen(String data) {
     	
     	publisher.publishEvent(data);
@@ -30,5 +34,4 @@ private static final Logger logger = Logger.getLogger(NewSugerenceListener.class
 		this.publisher = eventPublisher;
 		
 	}
-	
 }

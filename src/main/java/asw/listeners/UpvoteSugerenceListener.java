@@ -1,4 +1,4 @@
-package hello.listeners;
+package asw.listeners;
 
 import javax.annotation.ManagedBean;
 
@@ -7,17 +7,17 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.kafka.annotation.KafkaListener;
 
-import asw.DBManagement.model.Comentario;
+import asw.DBManagement.model.Opinion;
 
 @ManagedBean
-public class NewComentaryListener implements ApplicationEventPublisherAware{
-	
+public class UpvoteSugerenceListener implements ApplicationEventPublisherAware{
+
 private static final Logger logger = Logger.getLogger(NewSugerenceListener.class);
     
     private ApplicationEventPublisher publisher;
 
-    @KafkaListener(id="newComentary", topics = KafkaTopics.NEW_COMENTARY)
-    public void listen(Comentario data) {
+    @KafkaListener(id="upvoteSugerence", topics = KafkaTopics.UPVOTE_SUGERENCE)
+    public void listen(String data) {
     	
     	publisher.publishEvent(data);
     	

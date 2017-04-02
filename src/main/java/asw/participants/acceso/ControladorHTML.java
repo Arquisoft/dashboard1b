@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -129,6 +130,13 @@ public class ControladorHTML {
 
 	@RequestMapping(path="/userPriv", method=RequestMethod.GET)
 	public String popularidadSugerencia(@RequestBody String parametros, Model modelo) {
+		
+		SseEmitter emitter = new SseEmitter();
+
+	    synchronized (sseEmitters) {
+	        sseEmitters.add(emitter);
+	    }
+	    emitter.onCompletion(() -> sseEmitters.remove(emitter));
 		//metodo que trae una lista usuarios
 		List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
 		//Implementar metodo para sacar la lista de usuarios de una misma categoria
@@ -173,7 +181,7 @@ public class ControladorHTML {
 		synchronized (sseEmitters) {
 			for(SseEmitter emitter: sseEmitters){
 				try {
-					emitter.send(event);
+					emitter.send(event, MediaType.APPLICATION_JSON);
 				} catch (IOException e) {
 					e.printStackTrace();
 					
@@ -182,74 +190,74 @@ public class ControladorHTML {
 		}
 	}
 	
-	public String nuevaSugerencia(Sugerencia sugerencia,Model modelo)
-	{
-		if(modelo.containsAttribute("estadisticas")){
-			Estadistica esNueva =estatService.nuevaSugerencia(sugerencia);
-			@SuppressWarnings("unchecked")
-			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
-			estadisticas.add(esNueva);
-			modelo.addAttribute("estadisticas",estadisticas);
-		}
-		else
-		{
-			List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
-			sugerencias.add(sugerencia);
-			List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);	
-			modelo.addAttribute("estadisticas",estadisticas);
-		}
-		this.nuevoHecho();
-
-		return "userPriv";
-	}
-	
-	public String nuevaComentario(Comentario comentario,Model modelo)
-	{
-		if(modelo.containsAttribute("estadisticas")){
-			@SuppressWarnings("unchecked")
-			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
-			for(Estadistica est : estadisticas){
-				
-				if(est.getIdSugerencia()==est.getIdSugerencia()){
-					estatService.nuevoComentario(comentario, est);
-				}
-			}
-			
-			
-			modelo.addAttribute("estadisticas",estadisticas);
-		}
-		
-		this.nuevoHecho();
-		return "userPriv";
-	}
-	
-	@RequestMapping (path = "/register", method = RequestMethod.GET)
-	public SseEmitter register() throws IOException {
-	   // log.info("Registering a stream.");
-
-	    SseEmitter emitter = new SseEmitter();
-
-	    synchronized (sseEmitters) {
-	        sseEmitters.add(emitter);
-	    }
-	    emitter.onCompletion(() -> sseEmitters.remove(emitter));
-
-	    return emitter;
-	}
-	
-	
-	public void nuevoHecho()
-	{
-		synchronized (sseEmitters) {
-		    sseEmitters.forEach((SseEmitter emitter) -> {
-		        try {
-		            emitter.send(1);
-		        } catch (IOException e) {
-		            emitter.complete();
-		            sseEmitters.remove(emitter);
-		        }
-		    });
-		}
-	}
+//	public String nuevaSugerencia(Sugerencia sugerencia,Model modelo)
+//	{
+//		if(modelo.containsAttribute("estadisticas")){
+//			Estadistica esNueva =estatService.nuevaSugerencia(sugerencia);
+//			@SuppressWarnings("unchecked")
+//			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
+//			estadisticas.add(esNueva);
+//			modelo.addAttribute("estadisticas",estadisticas);
+//		}
+//		else
+//		{
+//			List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
+//			sugerencias.add(sugerencia);
+//			List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);	
+//			modelo.addAttribute("estadisticas",estadisticas);
+//		}
+//		this.nuevoHecho();
+//
+//		return "userPriv";
+//	}
+//	
+//	public String nuevaComentario(Comentario comentario,Model modelo)
+//	{
+//		if(modelo.containsAttribute("estadisticas")){
+//			@SuppressWarnings("unchecked")
+//			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
+//			for(Estadistica est : estadisticas){
+//				
+//				if(est.getIdSugerencia()==est.getIdSugerencia()){
+//					estatService.nuevoComentario(comentario, est);
+//				}
+//			}
+//			
+//			
+//			modelo.addAttribute("estadisticas",estadisticas);
+//		}
+//		
+//		this.nuevoHecho();
+//		return "userPriv";
+//	}
+//	
+//	@RequestMapping (path = "/register", method = RequestMethod.GET)
+//	public SseEmitter register() throws IOException {
+//	   // log.info("Registering a stream.");
+//
+//	    SseEmitter emitter = new SseEmitter();
+//
+//	    synchronized (sseEmitters) {
+//	        sseEmitters.add(emitter);
+//	    }
+//	    emitter.onCompletion(() -> sseEmitters.remove(emitter));
+//
+//	    return emitter;
+//	}
+//	
+//	
+//	public void nuevoHecho()
+//	{
+//		synchronized (sseEmitters) {
+//		    sseEmitters.forEach((SseEmitter emitter) -> {
+//		        try {
+//		            emitter.send(1);
+//		        } catch (IOException e) {
+//		            emitter.complete();
+//		            sseEmitters.remove(emitter);
+//		        }
+//		    });
+//		}
+//	}
 	
 }
