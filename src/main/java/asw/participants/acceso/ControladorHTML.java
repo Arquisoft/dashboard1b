@@ -137,14 +137,6 @@ public class ControladorHTML {
 
 	@RequestMapping(path="/userPriv", method=RequestMethod.GET)
 	public String popularidadSugerencia(@RequestBody String parametros, Model modelo) {
-		
-		SseEmitter emitter = new SseEmitter();
-
-	    synchronized (sseEmitters) {
-	    	System.out.println("añadi emitter");
-	        sseEmitters.add(emitter);
-	    }
-	    emitter.onCompletion(() -> sseEmitters.remove(emitter));
 		//metodo que trae una lista usuarios
 		//Implementar metodo para sacar la lista de usuarios de una misma categoria
 		Date fechaActual = new Date();
@@ -202,6 +194,20 @@ public class ControladorHTML {
 				}
 			}
 		}
+	}
+	
+	@RequestMapping("/dashboardAdmin/updates")
+	SseEmitter updateHTML() {
+		SseEmitter sseEmitter = new SseEmitter();
+		synchronized (this.sseEmitters) {
+			this.sseEmitters.add(sseEmitter);
+			sseEmitter.onCompletion(() -> {
+				synchronized (this.sseEmitters) {
+					this.sseEmitters.remove(sseEmitter);
+				}
+			});
+		}
+		return sseEmitter;
 	}
 	
 //	public String nuevaSugerencia(Sugerencia sugerencia,Model modelo)
