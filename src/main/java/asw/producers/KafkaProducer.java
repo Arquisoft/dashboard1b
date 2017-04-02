@@ -1,8 +1,10 @@
 package asw.producers;
 
+import asw.DBManagement.model.Sugerencia;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -23,8 +25,25 @@ public class KafkaProducer {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
+    private ObjectMapper mapper;
+
+    private Sugerencia sugerencia;
+    private SugerenciaRandom sugerenciaRandom;
+
+
     @Scheduled(fixedDelay = 15000)
     public void sendNewSuggestion() {
+        sugerenciaRandom = new SugerenciaRandom();
+        String sugerenciaJSON = "";
+        sugerencia = sugerenciaRandom.newSugerencia();
+        logger.info(sugerencia);
+
+        try {
+            sugerenciaJSON = mapper.writeValueAsString(sugerencia);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        logger.info("Sugerencia:"+ sugerenciaJSON);
         String id = randomID();
         send("test", id);
     }
