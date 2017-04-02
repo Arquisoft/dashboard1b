@@ -27,7 +27,7 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		campos.add("Apoyos");
 		valores.add(sugerencia.getVotos()*1.0);
 
-		//campos.add("Repulsas");
+		campos.add("Repulsas");
 		//valores.add(sugerencia.getNumeroContra()*1.0);
 		
 		return new Estadistica("Popularidad de "+sugerencia.getTitulo(),campos, valores);

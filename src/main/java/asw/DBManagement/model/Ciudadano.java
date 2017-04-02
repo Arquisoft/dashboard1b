@@ -1,18 +1,20 @@
 package asw.DBManagement.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+import javax.persistence.OneToMany;
 
 @Entity
 public class Ciudadano {
 	
 	@Id
 	@GeneratedValue
-	private long idCiudadano;
+	private Long id;		
 
 	private String nombre;
 	private String apellidos;
@@ -23,6 +25,11 @@ public class Ciudadano {
 	private String dni;
 	private String password;
 	private boolean privilegios;
+	
+	@OneToMany(mappedBy = "ciudadano")
+	private Set<Sugerencia> sugerencia = new HashSet<Sugerencia>();
+	@OneToMany(mappedBy = "ciudadano")
+	private Set<Comentario> comentario = new HashSet<Comentario>();
 	
 	public Ciudadano(String nombre, String apellidos, String email, Date fechaNacimiento, String residencia,
 			String nacionalidad, String dni, String password, boolean privilegios) {
@@ -38,9 +45,24 @@ public class Ciudadano {
 		this.privilegios = privilegios;
 	}
 	
-	//Constructor vacio para JPA
 	Ciudadano(){}
 
+	public Set<Sugerencia> getSugerencia(){
+		return new HashSet<Sugerencia>(sugerencia);
+	}
+	
+	Set<Sugerencia> _getSugerencia(){
+		return sugerencia;
+	}
+	
+	public Set<Comentario> getComentario(){
+		return new HashSet<Comentario>(comentario);
+	}
+	
+	Set<Comentario> _getComentario(){
+		return comentario;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -108,10 +130,35 @@ public class Ciudadano {
 	public boolean isPrivilegios() {
 		return privilegios;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ciudadano other = (Ciudadano) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {
-		return "Ciudadano [id=" + idCiudadano + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
+		return "Ciudadano [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
 				+ ", fechaNacimiento=" + fechaNacimiento + ", residencia=" + residencia + ", nacionalidad="
 				+ nacionalidad + ", dni=" + dni + ", password=" + password + ", privilegios=" + privilegios + "]";
 	}

@@ -5,35 +5,41 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Sugerencia {
 
 	@Id
 	@GeneratedValue
-	private long IdSugerencia;
-	private long idCiudadano;
+	private long Id;
 	private String titulo;
 	private Date fecha;
 	private boolean aprobacion;
 	private int votos;
 	
-	public Sugerencia(long idCiudadano, String titulo, Date fecha, boolean aprobacion, int votos) {
+	@ManyToOne private Ciudadano ciudadano;
+	
+	public Sugerencia(String titulo, Date fecha, boolean aprobacion, int votos) {
 		super();
-		this.idCiudadano = idCiudadano;
 		this.titulo = titulo;
 		this.fecha = fecha;
 		this.aprobacion = aprobacion;
 		this.votos = votos;
 	}
 
-	public long getIdSugerencia() {
-		return IdSugerencia;
+	public Ciudadano getProveedor(){
+		return ciudadano;
+	}
+	
+	void _setCiudadano(Ciudadano ciudadano){
+		this.ciudadano = ciudadano;
+	}
+	
+	public long getId() {
+		return Id;
 	}
 
-	public void setIdSugerencia(long idSugerencia) {
-		IdSugerencia = idSugerencia;
-	}
 
 	public String getTitulo() {
 		return titulo;
@@ -67,14 +73,10 @@ public class Sugerencia {
 		this.votos = votos;
 	}
 
-	public Long getIdCiudadano() {
-		return idCiudadano;
-	}
 
 	@Override
 	public String toString() {
-		return "Sugerencia [IdSugerencia=" + IdSugerencia + ", idCiudadano=" + idCiudadano + ", titulo=" + titulo
+		return "Sugerencia [IdSugerencia=" + Id + ", titulo=" + titulo
 				+ ", fecha=" + fecha + ", aprobacion=" + aprobacion + ", votos=" + votos + "]";
 	}
-
 }
