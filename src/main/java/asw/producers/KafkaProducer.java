@@ -1,5 +1,6 @@
 package asw.producers;
 
+import asw.DBManagement.model.Comentario;
 import asw.DBManagement.model.Sugerencia;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
+
 import javax.annotation.ManagedBean;
 
 @ManagedBean
@@ -19,24 +21,23 @@ public class KafkaProducer {
 
     private static final Logger logger = Logger.getLogger(KafkaProducer.class);
 
-
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
     private ObjectMapper mapper;
 
-    private Sugerencia sugerencia;
-
     @Autowired
-    private RandomGenerator sugerenciaRandom;
+    private RandomGenerator randomGenerator;
+
+    private Sugerencia sugerencia;
+    private Comentario comentario;
 
 
     @Scheduled(fixedDelay = 15000)
     public void sendNewSuggestion() {
-        //sugerenciaRandom = new RandomGenerator();
         String sugerenciaJSON = "";
-        sugerencia = sugerenciaRandom.newSugerencia();
+        sugerencia = randomGenerator.newSugerencia();
 
         try {
             sugerenciaJSON = mapper.writeValueAsString(sugerencia);
@@ -44,7 +45,19 @@ public class KafkaProducer {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
 
+    @Scheduled(fixedDelay = 5000)
+    public void sendNewComentario() {
+        String comentarioJSON = "";
+        comentario = randomGenerator.newComentario();
+
+        try {
+            comentarioJSON = mapper.writeValueAsString(comentario);
+            send("comentarios", comentarioJSON);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     public void send(String topic, String data) {
@@ -62,5 +75,4 @@ public class KafkaProducer {
             }
         });
     }
-
 }
