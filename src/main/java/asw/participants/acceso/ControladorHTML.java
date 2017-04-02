@@ -151,36 +151,33 @@ public class ControladorHTML {
 		return "userPriv";
 	}
 	
-	@RequestMapping( value= "userPriv")
+	@RequestMapping( value = "/newSugerence")
 	@EventListener
-	public void newSugerence(String data){
+	public void newSugerence(Sugerencia data){
 		
 		System.out.println("Evento escuchado!");
-		SseEventBuilder newSugerenceEvent = SseEmitter.event().name("newSugerence").data(data);
+		SseEventBuilder newSugerenceEvent = SseEmitter.event().name("newSugerence").data("{ \"title\":\"" + data.getTitulo() + "\"}");
 		sendEvent(newSugerenceEvent);
 	}
 	
-	public class SugerenciaTabla{
-		private String titulo;
-	}
-	
+	@RequestMapping( value = "/newComentary")
 	@EventListener
-	public void newComentary(String data){
+	public void newComentary(Comentario data){
 		SseEventBuilder newComentaryEvent = SseEmitter.event().name("newComentary").data(data);
 		sendEvent(newComentaryEvent);
 	}
 	
-	@EventListener
-	public void upvoteSugerence(String data){
-		SseEventBuilder upvoteSugerenceEvent = SseEmitter.event().name("upvoteSugerence").data(data);
-		sendEvent(upvoteSugerenceEvent);
-	}
-	
-	@EventListener
-	public void downvoteSugerence(String data){
-		SseEventBuilder downvoteSugerenceEvent = SseEmitter.event().name("downvoteSugerence").data(data);
-		sendEvent(downvoteSugerenceEvent);
-	}
+//	@EventListener
+//	public void upvoteSugerence(String data){
+//		SseEventBuilder upvoteSugerenceEvent = SseEmitter.event().name("upvoteSugerence").data(data);
+//		sendEvent(upvoteSugerenceEvent);
+//	}
+//	
+//	@EventListener
+//	public void downvoteSugerence(String data){
+//		SseEventBuilder downvoteSugerenceEvent = SseEmitter.event().name("downvoteSugerence").data(data);
+//		sendEvent(downvoteSugerenceEvent);
+//	}
 	
 	private void sendEvent(SseEventBuilder event){
 		synchronized (sseEmitters) {
@@ -196,7 +193,7 @@ public class ControladorHTML {
 		}
 	}
 	
-	@RequestMapping("/dashboardAdmin/updates")
+	@RequestMapping("/userPriv/updates")
 	SseEmitter updateHTML() {
 		SseEmitter sseEmitter = new SseEmitter();
 		synchronized (this.sseEmitters) {

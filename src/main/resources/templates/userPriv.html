@@ -6,15 +6,13 @@
 <title>Popularidad de las sugerencias</title>
 <script type="text/javascript">
 	var connect = function() {
-		var source = new EventSource('/dashboardAdmin/updates');
+		var source = new EventSource('/userPriv/updates');
 		 // Handle correct opening of connection
         source.addEventListener('open', function (e) {
             console.log('Connected.');
         });
 		 
-		 source.addEventListener('newSugerence', function(event){
-			 location.reload();
-		 });
+		
 		
 		// Reconnect if the connection fails
 		source.addEventListener('error', function(e) {
@@ -25,6 +23,16 @@
 			}
 		}, false);
 	};
+	
+	var source = new EventSource('/userPriv/updates');
+	
+	 source.addEventListener('newSugerence', function(event){
+		 var sugerence = JSON.parse(event.data);
+		 var row = document.getElementById("table").insertRow(-1);
+		 row.insertCell(0).innerHTML = "<th>" + sugerence.title + "</th>";
+		 row.insertCell(1).innerHTML = "<th>" + 0 + "</th>";
+		 row.insertCell(2).innerHTML = "<th>" + 0 + "</th>";
+	 });
 </script>
 </head>
 
