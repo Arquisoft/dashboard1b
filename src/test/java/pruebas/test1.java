@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import asw.Application;
 
+//import asw.Application;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebIntegrationTest(value = "server.port=8090")
@@ -43,6 +45,10 @@ public class test1 {
     driver.findElement(By.name("password")).sendKeys("123456");
     driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
     driver.findElement(By.id("logearse")).click();
+    
+    String texto = "SIN PRIVILEGIOS";
+    SeleniumUtils.textoPresentePagina(driver, texto);
+    
   }
 
   @After

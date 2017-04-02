@@ -85,17 +85,17 @@ public class SeleniumUtils {
 		assertTrue("Texto " + texto + " aun presente !", list.size() == 0);			
 	}
 
-	static public void esperaCargaPaginaNoTexto(WebDriver driver, String texto, int timeout)
+	/*static public void esperaCargaPaginaNoTexto(WebDriver driver, String texto, int timeout)
 	{
 		Boolean resultado = 
 				(new WebDriverWait(driver, timeout)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'" + texto + "')]")));
 
 		assertTrue(resultado);	
-	}
+	}*/
 
 
 
-	static public List<WebElement> esperaCargaPaginaxpath(WebDriver driver, String xpath, int timeout)
+	/*static public List<WebElement> esperaCargaPaginaxpath(WebDriver driver, String xpath, int timeout)
 	{
 		WebElement resultado = 
 				(new WebDriverWait(driver, timeout)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
@@ -103,7 +103,7 @@ public class SeleniumUtils {
 		List<WebElement> elementos = driver.findElements(By.xpath(xpath));
 
 		return elementos;					
-	}
+	}*/
 
 	//Permite buscar por Id o Class con espera
 	//@param criterio. "id" or "class" or "text"
