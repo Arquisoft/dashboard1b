@@ -110,12 +110,12 @@ public class SeleniumUtils {
 	//Aviso. Que se usa espera por la visibilidad del elemento
 	//De esta forma sirve tanto para carga de páginas enteras
 	//como para elementos que estan ocultos y se hace visibles
-	static public List<WebElement> esperaCargaPagina(WebDriver driver, String criterio, String id, int timeout)
+	/*static public List<WebElement> esperaCargaPagina(WebDriver driver, String criterio, String id, int timeout)
 	{
 		String busqueda;
 		if (criterio.equals("id")) busqueda = "//*[contains(@id,'" + id + "')]";
 		else if (criterio.equals("class")) busqueda = "//*[contains(@class,'" + id + "')]";
 		else busqueda = "//*[contains(text(),'" + id + "')]";
 		return esperaCargaPaginaxpath(driver, busqueda, timeout);
-	}
+	}*/
 }

@@ -15,8 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import asw.Application;
 
-//import asw.Application;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebIntegrationTest(value = "server.port=8090")
@@ -46,11 +44,43 @@ public class test1 {
     driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
     driver.findElement(By.id("logearse")).click();
     
-    String texto = "SIN PRIVILEGIOS";
+    String texto = "USUARIO SIN PRIVILEGIOS";
     SeleniumUtils.textoPresentePagina(driver, texto);
     
+   
   }
-
+  
+  @Test
+  public void testValduvieco() throws Exception {
+    driver.get(baseUrl + "/");
+    driver.findElement(By.name("email")).clear();
+    driver.findElement(By.name("email")).sendKeys("valduvieco@gmail.com");
+    driver.findElement(By.name("password")).clear();
+    driver.findElement(By.name("password")).sendKeys("123456");
+    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+    driver.findElement(By.id("logearse")).click();
+    
+    String texto = "Popularidad de las sugerencias";
+    SeleniumUtils.textoPresentePagina(driver, texto);
+    
+   
+  }
+  @Test
+  public void testNoExiste() throws Exception {
+    driver.get(baseUrl + "/");
+    driver.findElement(By.name("email")).clear();
+    driver.findElement(By.name("email")).sendKeys("paco@gmail.com");
+    driver.findElement(By.name("password")).clear();
+    driver.findElement(By.name("password")).sendKeys("123456");
+    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+    driver.findElement(By.id("logearse")).click();
+    
+    String texto = "Error 404";
+    SeleniumUtils.textoPresentePagina(driver, texto);
+    
+   
+  }
+  
   @After
   public void tearDown() throws Exception {
     driver.quit();
