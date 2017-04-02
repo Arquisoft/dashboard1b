@@ -49,7 +49,7 @@ public class Ciudadano {
 		this.privilegios = privilegios;
 	}
 	
-	Ciudadano(){}
+	public Ciudadano(){}
 
 	public Set<Sugerencia> getSugerencia(){
 		return new HashSet<Sugerencia>(sugerencia);

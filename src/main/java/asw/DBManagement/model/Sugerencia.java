@@ -32,7 +32,7 @@ public class Sugerencia {
 		return ciudadano;
 	}
 	
-	void _setCiudadano(Ciudadano ciudadano){
+	public void _setCiudadano(Ciudadano ciudadano){
 		this.ciudadano = ciudadano;
 	}
 	
