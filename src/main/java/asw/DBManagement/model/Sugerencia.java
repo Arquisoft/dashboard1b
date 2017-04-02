@@ -29,7 +29,17 @@ public class Sugerencia {
 		this.aprobacion = aprobacion;
 		this.votos = votos;
 	}
-
+	
+	public Sugerencia(String titulo, Date fecha, boolean aprobacion, int votos , Ciudadano proveedor) {
+		super();
+		this.titulo = titulo;
+		this.fecha = fecha;
+		this.aprobacion = aprobacion;
+		this.votos = votos;
+		this.ciudadano=proveedor;
+	}
+	
+	public Sugerencia(){}
 	public Ciudadano getProveedor(){
 		return ciudadano;
 	}
