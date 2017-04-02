@@ -25,6 +25,7 @@ public class KafkaProducer {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
+    @Autowired
     private ObjectMapper mapper;
 
     private Sugerencia sugerencia;
@@ -36,20 +37,14 @@ public class KafkaProducer {
         sugerenciaRandom = new SugerenciaRandom();
         String sugerenciaJSON = "";
         sugerencia = sugerenciaRandom.newSugerencia();
-        logger.info(sugerencia);
 
         try {
             sugerenciaJSON = mapper.writeValueAsString(sugerencia);
+            send("sugerencias", sugerenciaJSON);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        logger.info("Sugerencia:"+ sugerenciaJSON);
-        String id = randomID();
-        send("test", id);
-    }
 
-    private String randomID() {
-        return new BigInteger(130, new SecureRandom()).toString(32);
     }
 
     public void send(String topic, String data) {

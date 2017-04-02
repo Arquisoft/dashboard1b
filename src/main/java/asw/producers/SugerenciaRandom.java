@@ -2,7 +2,11 @@ package asw.producers;
 
 import asw.DBManagement.model.Sugerencia;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Alex on 2017-04-02.
@@ -13,8 +17,7 @@ public class SugerenciaRandom {
     final Set<String> identifiers = new HashSet<String>();
 
     protected Sugerencia newSugerencia() {
-        Sugerencia sugerencia = new Sugerencia(randomNumber(0,1000), randomString(), randomDate(), randomBool(), randomNumber(0,1000));
-        return sugerencia;
+        return new Sugerencia(randomString(),randomDate(),randomBool(),randomNumber(0,1000));
     }
 
     private boolean randomBool() {
@@ -22,15 +25,9 @@ public class SugerenciaRandom {
     }
 
     private Date randomDate() {
-        int year, dayOfYear;
-
-        GregorianCalendar gc = new GregorianCalendar();
-        year = randomNumber(1900, 2010);
-        gc.set(gc.YEAR, year);
-        dayOfYear = randomNumber(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
-        gc.set(gc.DAY_OF_YEAR, dayOfYear);
-
-        return gc.getTime();
+        Random r =new Random();
+        long unixtime=(long) (1293861599+r.nextDouble()*60*60*24*365);
+        return new Date(unixtime);
     }
 
 
