@@ -1,5 +1,7 @@
 package asw.DBManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -27,12 +29,22 @@ public class Sugerencia {
 		this.aprobacion = aprobacion;
 		this.votos = votos;
 	}
-
+	
+	public Sugerencia(String titulo, Date fecha, boolean aprobacion, int votos , Ciudadano proveedor) {
+		super();
+		this.titulo = titulo;
+		this.fecha = fecha;
+		this.aprobacion = aprobacion;
+		this.votos = votos;
+		this.ciudadano=proveedor;
+	}
+	
+	public Sugerencia(){}
 	public Ciudadano getProveedor(){
 		return ciudadano;
 	}
 	
-	void _setCiudadano(Ciudadano ciudadano){
+	public void _setCiudadano(Ciudadano ciudadano){
 		this.ciudadano = ciudadano;
 	}
 	
