@@ -12,6 +12,7 @@ public class Comentario {
 	@GeneratedValue
 	private long id;
 	private String texto;
+	
 	@ManyToOne
 	private Ciudadano ciudadano;
 	

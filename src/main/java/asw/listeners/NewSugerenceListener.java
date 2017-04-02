@@ -21,7 +21,7 @@ public class NewSugerenceListener implements ApplicationEventPublisherAware{
     private ApplicationEventPublisher publisher;
 
     @KafkaListener(topics = KafkaTopics.NEW_SUGERENCE)
-    public void listen(SugerenceInfo data) {
+    public void listen(String data) {
     	System.out.println("Escuche!");
     	publisher.publishEvent(data);
     	

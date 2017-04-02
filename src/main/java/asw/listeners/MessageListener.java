@@ -33,8 +33,10 @@ public class MessageListener {
     public void listen(String data)  {
         logger.info("New message received: \"" + data + "\"");
         try {
+			logger.info("*****************\n");
+
 			Sugerencia sugerencia = mapper.readValue(data, Sugerencia.class);
-			logger.info("*****************\n"+"Sugerencia: "+sugerencia.getTitulo());
+			logger.info("*****************\n"+"Sugerencia: "+sugerencia.getTitulo()+" proveedor:" + sugerencia.getProveedor().getNombre());
 			sugRep.save(sugerencia);
 			
 		} catch (JsonParseException e) {

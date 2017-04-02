@@ -17,7 +17,7 @@ private static final Logger logger = Logger.getLogger(NewSugerenceListener.class
     private ApplicationEventPublisher publisher;
 
     @KafkaListener(id="newComentary", topics = KafkaTopics.NEW_COMENTARY)
-    public void listen(Comentario data) {
+    public void listen(String data) {
     	
     	publisher.publishEvent(data);
     	
