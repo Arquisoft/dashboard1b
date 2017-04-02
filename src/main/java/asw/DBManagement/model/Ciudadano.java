@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Ciudadano {
 	
@@ -32,11 +30,8 @@ public class Ciudadano {
 	private String password;
 	private boolean privilegios;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "ciudadano") 
+	@OneToMany(mappedBy = "ciudadano")
 	private Set<Sugerencia> sugerencia = new HashSet<Sugerencia>();
-	
-	@JsonIgnore
 	@OneToMany(mappedBy = "ciudadano")
 	private Set<Comentario> comentario = new HashSet<Comentario>();
 	
@@ -54,7 +49,7 @@ public class Ciudadano {
 		this.privilegios = privilegios;
 	}
 	
-	public Ciudadano(){}
+	Ciudadano(){}
 
 	public Set<Sugerencia> getSugerencia(){
 		return new HashSet<Sugerencia>(sugerencia);
