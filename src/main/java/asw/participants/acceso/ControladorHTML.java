@@ -122,7 +122,6 @@ public class ControladorHTML {
 
 
 	@RequestMapping(path="/userPriv", method=RequestMethod.GET)
-	@EventListener(condition = "event.listenerId.startsWith('newSugerence-')")
 	public String popularidadSugerencia(@RequestBody String parametros, Model modelo) {
 		//metodo que trae una lista usuarios
 		List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
@@ -140,7 +139,10 @@ public class ControladorHTML {
 		return "userPriv";
 	}
 	
-//	@RequestMapping("/userPriv")
-//	@EventListener(condition = "event.listenerId.startsWith('newSugerence-')")
-//	public void 
+	@RequestMapping("/userPriv")
+	@EventListener(condition = "event.listenerId.startsWith('newSugerence-')")
+	public void newSugerence(Sugerencia data){
+		SseEventBuilder newSugerenceEvent = SseEmitter.event();
+	}
+	
 }
