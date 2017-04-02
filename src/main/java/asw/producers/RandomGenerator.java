@@ -1,8 +1,10 @@
 package asw.producers;
 
 import asw.DBManagement.model.Ciudadano;
+import asw.DBManagement.model.Comentario;
 import asw.DBManagement.model.Sugerencia;
 import asw.DBManagement.persistence.CiudadanoRepository;
+import asw.DBManagement.persistence.SugerenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class RandomGenerator {
     @Autowired
     private CiudadanoRepository crepo;
 
+    @Autowired
+    private SugerenciaRepository sugerenciaRepository;
+
     /**
      * Generate a random sugerencia
      * @return a random sugerencia
@@ -35,15 +40,22 @@ public class RandomGenerator {
         return sugerencia;
     }
 
+    protected Comentario newComentario() {
+        Comentario comentario = new Comentario(randomString(),newCiudadano());
+        Iterable<Sugerencia> sugerenciaIterable = sugerenciaRepository.findAll();
+        Long id = new Long(randomNumber(1,(int) sugerenciaIterable.spliterator().getExactSizeIfKnown())); //Not a good idea
+        comentario.setSugerencia(sugerenciaRepository.findOne(id));
+        return comentario;
+    }
+
     protected Ciudadano newCiudadano() {
         Long id = new Long(randomNumber(1,4));
-        System.out.println("id: "+ id);
-        Iterable<Ciudadano> ciudadanoIterable = crepo.findAll();
-        System.out.println("ciudadanoIterable:" + ciudadanoIterable);
         Ciudadano ciudadano = crepo.findOne(id);
-        System.out.println("ciudadano:" + ciudadano);
+        ciudadano.setId(id);
         return ciudadano;
     }
+
+
 
     /**
      *  Generate a random boolean
