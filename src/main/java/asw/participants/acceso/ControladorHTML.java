@@ -1,7 +1,9 @@
 package asw.participants.acceso;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import asw.DBManagement.model.Ciudadano;
+import asw.DBManagement.model.Comentario;
 import asw.DBManagement.model.Estadistica;
 import asw.DBManagement.model.Sugerencia;
 import asw.DBManagement.persistence.CiudadanoRepository;
@@ -23,6 +27,9 @@ import asw.estadistica.EstadisticaService;
 @Controller
 public class ControladorHTML {
 
+	 private List<SseEmitter> sseEmitters = Collections.synchronizedList(new ArrayList<>()); 
+
+	
 	@Autowired
 	private CiudadanoRepository repositorio;
 
@@ -137,4 +144,76 @@ public class ControladorHTML {
 		modelo.addAttribute("estadisticas",estadisticas);
 		return "userPriv";
 	}
+	
+	
+	public String nuevaSugerencia(Sugerencia sugerencia,Model modelo)
+	{
+		if(modelo.containsAttribute("estadisticas")){
+			Estadistica esNueva =estatService.nuevaSugerencia(sugerencia);
+			@SuppressWarnings("unchecked")
+			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
+			estadisticas.add(esNueva);
+			modelo.addAttribute("estadisticas",estadisticas);
+		}
+		else
+		{
+			List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
+			sugerencias.add(sugerencia);
+			List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);	
+			modelo.addAttribute("estadisticas",estadisticas);
+		}
+		this.nuevoHecho();
+
+		return "userPriv";
+	}
+	
+	public String nuevaComentario(Comentario comentario,Model modelo)
+	{
+		if(modelo.containsAttribute("estadisticas")){
+			@SuppressWarnings("unchecked")
+			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
+			for(Estadistica est : estadisticas){
+				
+				if(est.getIdSugerencia()==est.getIdSugerencia()){
+					estatService.nuevoComentario(comentario, est);
+				}
+			}
+			
+			
+			modelo.addAttribute("estadisticas",estadisticas);
+		}
+		
+		this.nuevoHecho();
+		return "userPriv";
+	}
+	
+	@RequestMapping (path = "/register", method = RequestMethod.GET)
+	public SseEmitter register() throws IOException {
+	   // log.info("Registering a stream.");
+
+	    SseEmitter emitter = new SseEmitter();
+
+	    synchronized (sseEmitters) {
+	        sseEmitters.add(emitter);
+	    }
+	    emitter.onCompletion(() -> sseEmitters.remove(emitter));
+
+	    return emitter;
+	}
+	
+	
+	public void nuevoHecho()
+	{
+		synchronized (sseEmitters) {
+		    sseEmitters.forEach((SseEmitter emitter) -> {
+		        try {
+		            emitter.send(1);
+		        } catch (IOException e) {
+		            emitter.complete();
+		            sseEmitters.remove(emitter);
+		        }
+		    });
+		}
+	}
+	
 }

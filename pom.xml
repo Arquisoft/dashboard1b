@@ -13,12 +13,12 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.4.4.RELEASE</version>
 	</parent>
-	
+
 	<dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bus-kafka</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-kafka</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -26,9 +26,9 @@
 		</dependency>
 
 		<dependency>
-  			<groupId>org.postgresql</groupId>
-  			<artifactId>postgresql</artifactId>
-  			<version>9.4-1206-jdbc42</version>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1206-jdbc42</version>
 		</dependency>
 
 		<dependency>
@@ -57,6 +57,25 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>2.5.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.53.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.saucelabs</groupId>
+			<artifactId>sauce_junit</artifactId>
+			<version>2.1.21</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -104,7 +123,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		
+
 	</build>
 
 	<reporting>

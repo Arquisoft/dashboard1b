@@ -4,6 +4,24 @@
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <title>Popularidad de las sugerencias</title>
+<script type="text/javascript">
+	var connect = function() {
+		var source = new EventSource('/register');
+		 // Handle correct opening of connection
+        source.addEventListener('open', function (e) {
+            console.log('Connected.');
+        });
+		
+		// Reconnect if the connection fails
+		source.addEventListener('error', function(e) {
+			console.log('Disconnected.');
+			if (e.readyState == EventSource.CLOSED) {
+				connected = false;
+				connect();
+			}
+		}, false);
+	};
+</script>
 </head>
 
 <body>
@@ -17,9 +35,8 @@
 		</tr>
 		<tr th:each="est : ${estadisticas}">
 			<td th:text="${est.titulo}">Onions</td>
-			<td th:text="${est.valores.get(0)}">2.41</td>
-			<td th:text="${est.valores.get(1)}">2.41</td>
-			<td th:text="${est.valores.get(2)}">2.41</td>
+			<td th:text="${est.campos.get(Comentarios)}">2.41</td>
+			<td th:text="${est.campos.get(Apoyos)}">2.41</td>
 		</tr>
 	</table>
 

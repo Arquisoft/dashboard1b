@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,6 +16,18 @@ public class Ciudadano {
 	@Id
 	@GeneratedValue
 	private Long id;		
+
+	public Long getIdCiudadano() {
+		return idCiudadano;
+	}
+
+	public void setIdCiudadano(Long idCiudadano) {
+		this.idCiudadano = idCiudadano;
+	}
+
+	public void setPrivilegios(boolean privilegios) {
+		this.privilegios = privilegios;
+	}
 
 	private String nombre;
 	private String apellidos;
@@ -162,5 +175,7 @@ public class Ciudadano {
 				+ ", fechaNacimiento=" + fechaNacimiento + ", residencia=" + residencia + ", nacionalidad="
 				+ nacionalidad + ", dni=" + dni + ", password=" + password + ", privilegios=" + privilegios + "]";
 	}
+	
+	
 
 }
