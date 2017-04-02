@@ -12,8 +12,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import javax.annotation.ManagedBean;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 
 @ManagedBean
 @EnableScheduling
@@ -29,12 +27,12 @@ public class KafkaProducer {
     private ObjectMapper mapper;
 
     private Sugerencia sugerencia;
-    private SugerenciaRandom sugerenciaRandom;
+    private RandomGenerator sugerenciaRandom;
 
 
     @Scheduled(fixedDelay = 15000)
     public void sendNewSuggestion() {
-        sugerenciaRandom = new SugerenciaRandom();
+        sugerenciaRandom = new RandomGenerator();
         String sugerenciaJSON = "";
         sugerencia = sugerenciaRandom.newSugerencia();
 
