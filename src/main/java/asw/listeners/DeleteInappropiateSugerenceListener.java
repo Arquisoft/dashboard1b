@@ -14,7 +14,7 @@ private static final Logger logger = Logger.getLogger(NewSugerenceListener.class
     
     private ApplicationEventPublisher publisher;
 
-    @KafkaListener(id="deleteSugerence", topics = KafkaTopics.DELETE_SUGERENCE)
+    @KafkaListener(topics = KafkaTopics.DELETE_SUGERENCE)
     public void listen(String data) {
     	
     	publisher.publishEvent(data);

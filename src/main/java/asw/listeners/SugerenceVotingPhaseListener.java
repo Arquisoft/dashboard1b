@@ -16,7 +16,7 @@ private static final Logger logger = Logger.getLogger(NewSugerenceListener.class
     
     private ApplicationEventPublisher publisher;
 
-    @KafkaListener(id="sugerenceVotingPhase", topics = KafkaTopics.SUGERENCE_VOTING_PHASE)
+    @KafkaListener(topics = KafkaTopics.SUGERENCE_VOTING_PHASE)
     public void listen(String data) {
     	
     	publisher.publishEvent(data);
