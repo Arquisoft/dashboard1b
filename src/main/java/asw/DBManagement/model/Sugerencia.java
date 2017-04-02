@@ -1,5 +1,7 @@
 package asw.DBManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -32,7 +34,7 @@ public class Sugerencia {
 		return ciudadano;
 	}
 	
-	void _setCiudadano(Ciudadano ciudadano){
+	public void _setCiudadano(Ciudadano ciudadano){
 		this.ciudadano = ciudadano;
 	}
 	

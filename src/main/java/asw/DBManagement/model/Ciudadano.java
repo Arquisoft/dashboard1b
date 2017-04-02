@@ -1,10 +1,11 @@
 package asw.DBManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,9 +30,11 @@ public class Ciudadano {
 	private String dni;
 	private String password;
 	private boolean privilegios;
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "ciudadano")
 	private Set<Sugerencia> sugerencia = new HashSet<Sugerencia>();
+	@JsonIgnore
 	@OneToMany(mappedBy = "ciudadano")
 	private Set<Comentario> comentario = new HashSet<Comentario>();
 	
@@ -49,7 +52,7 @@ public class Ciudadano {
 		this.privilegios = privilegios;
 	}
 	
-	Ciudadano(){}
+	public Ciudadano(){}
 
 	public Set<Sugerencia> getSugerencia(){
 		return new HashSet<Sugerencia>(sugerencia);
