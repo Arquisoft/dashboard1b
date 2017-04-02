@@ -36,7 +36,7 @@ public class MessageListener {
 			logger.info("*****************\n");
 
 			Sugerencia sugerencia = mapper.readValue(data, Sugerencia.class);
-			logger.info("*****************\n"+"Sugerencia: "+sugerencia.getTitulo()+" proveedor:" + sugerencia.getProveedor().getNombre());
+			logger.info("*****************\n"+"Sugerencia: "+sugerencia.getTitulo()+" proveedor:" + sugerencia.getProveedor());
 			sugRep.save(sugerencia);
 			
 		} catch (JsonParseException e) {
