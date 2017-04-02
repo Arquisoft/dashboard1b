@@ -33,8 +33,4 @@ public class Estadistica {
 	public void setValores(List<Double> valores) {
 		Valores = valores;
 	}
-	
-	
-	
-
 }

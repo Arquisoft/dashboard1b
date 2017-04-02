@@ -127,11 +127,12 @@ public class ControladorHTML {
 		//metodo que trae una lista usuarios
 		List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
 		//Implementar metodo para sacar la lista de usuarios de una misma categoria
-		
-		sugerencias.add(new Sugerencia("Pepe", 25, 8, 0));
-		sugerencias.add(new Sugerencia("Manolo", 45, 89, 69));
-		sugerencias.add(new Sugerencia("Paco", 14, 87, 45));
-		sugerencias.add(new Sugerencia("Antonio", 12, 8, 89));
+		Date fechaActual = new Date();
+		long a = 1;
+		////sugerencias.add(new Sugerencia(a, "Titulo 1", fechaActual, true, 50));
+		////sugerencias.add(new Sugerencia(a, "Titulo 2", fechaActual, false, 25));
+		//sugerencias.add(new Sugerencia(a, "Titulo 3", fechaActual, false, 4));
+		//sugerencias.add(new Sugerencia(a, "Titulo 4", fechaActual, true, 12));
 		System.out.println("Pasa por aqui ");
 
 		List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);
@@ -139,7 +140,7 @@ public class ControladorHTML {
 		return "userPriv";
 	}
 	
-	@RequestMapping("/userPriv")
-	@EventListener(condition = "event.listenerId.startsWith('newSugerence-')")
-	public void 
+//	@RequestMapping("/userPriv")
+//	@EventListener(condition = "event.listenerId.startsWith('newSugerence-')")
+//	public void 
 }

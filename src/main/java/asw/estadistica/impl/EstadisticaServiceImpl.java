@@ -20,17 +20,17 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 
 		
 		
-		campos.add("Comentarios");
-		valores.add(sugerencia.getNumeroComentarios()*1.0);
+		//campos.add("Comentarios");
+		//valores.add(sugerencia.getNumeroComentarios()*1.0);
 		
 
 		campos.add("Apoyos");
-		valores.add(sugerencia.getNumeroApoyos()*1.0);
+		valores.add(sugerencia.getVotos()*1.0);
 
 		campos.add("Repulsas");
-		valores.add(sugerencia.getNumeroContra()*1.0);
+		//valores.add(sugerencia.getNumeroContra()*1.0);
 		
-		return new Estadistica("Popularidad de "+sugerencia.getNombre(),campos, valores);
+		return new Estadistica("Popularidad de "+sugerencia.getTitulo(),campos, valores);
 
 	}
 

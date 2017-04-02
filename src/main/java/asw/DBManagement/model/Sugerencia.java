@@ -1,53 +1,80 @@
 package asw.DBManagement.model;
+import java.util.Date;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-@XmlRootElement(name = "sugerencia")
+@Entity
 public class Sugerencia {
 
-	private String nombre;
-	private int numeroComentarios;
-	private int numeroApoyos;
-	private int numeroContra;
-
-	public Sugerencia(String nombre, int numeroComentarios, int numeroApoyos, int numeroContra) {
+	@Id
+	@GeneratedValue
+	private long Id;
+	private String titulo;
+	private Date fecha;
+	private boolean aprobacion;
+	private int votos;
+	
+	@ManyToOne private Ciudadano ciudadano;
+	
+	public Sugerencia(String titulo, Date fecha, boolean aprobacion, int votos) {
 		super();
-		this.nombre = nombre;
-		this.numeroComentarios = numeroComentarios;
-		this.numeroApoyos = numeroApoyos;
-		this.numeroContra = numeroContra;
+		this.titulo = titulo;
+		this.fecha = fecha;
+		this.aprobacion = aprobacion;
+		this.votos = votos;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public Ciudadano getProveedor(){
+		return ciudadano;
 	}
-	@XmlElement
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	
+	void _setCiudadano(Ciudadano ciudadano){
+		this.ciudadano = ciudadano;
 	}
-	public int getNumeroComentarios() {
-		return numeroComentarios;
+	
+	public long getId() {
+		return Id;
 	}
-	@XmlElement
-	public void setNumeroComentarios(int numeroComentarios) {
-		this.numeroComentarios = numeroComentarios;
+
+	public String getTitulo() {
+		return titulo;
 	}
-	public int getNumeroApoyos() {
-		return numeroApoyos;
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
-	@XmlElement
-	public void setNumeroApoyos(int numeroApoyos) {
-		this.numeroApoyos = numeroApoyos;
+
+	public Date getFecha() {
+		return fecha;
 	}
-	public int getNumeroContra() {
-		return numeroContra;
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
-	@XmlElement
-	public void setNumeroContra(int numeroContra) {
-		this.numeroContra = numeroContra;
+
+	public boolean isAprobacion() {
+		return aprobacion;
+	}
+
+	public void setAprobacion(boolean aprobacion) {
+		this.aprobacion = aprobacion;
+	}
+
+	public int getVotos() {
+		return votos;
+	}
+
+	public void setVotos(int votos) {
+		this.votos = votos;
 	}
 
 
-
+	@Override
+	public String toString() {
+		return "Sugerencia [IdSugerencia=" + Id + ", titulo=" + titulo
+				+ ", fecha=" + fecha + ", aprobacion=" + aprobacion + ", votos=" + votos + "]";
+	}
 }
