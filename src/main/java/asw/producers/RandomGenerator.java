@@ -4,7 +4,7 @@ import asw.DBManagement.model.Ciudadano;
 import asw.DBManagement.model.Sugerencia;
 import asw.DBManagement.persistence.CiudadanoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -14,12 +14,13 @@ import java.util.Set;
 /**
  * Created by Alex on 2017-04-02.
  */
-@Component
+@Service
 public class RandomGenerator {
 
     final java.util.Random rand = new java.util.Random();
     final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890";
     final Set<String> identifiers = new HashSet<String>();
+
 
     @Autowired
     private CiudadanoRepository crepo;

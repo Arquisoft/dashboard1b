@@ -27,12 +27,14 @@ public class KafkaProducer {
     private ObjectMapper mapper;
 
     private Sugerencia sugerencia;
+
+    @Autowired
     private RandomGenerator sugerenciaRandom;
 
 
     @Scheduled(fixedDelay = 15000)
     public void sendNewSuggestion() {
-        sugerenciaRandom = new RandomGenerator();
+        //sugerenciaRandom = new RandomGenerator();
         String sugerenciaJSON = "";
         sugerencia = sugerenciaRandom.newSugerencia();
 
