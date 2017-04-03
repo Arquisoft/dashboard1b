@@ -24,6 +24,7 @@ import asw.DBManagement.model.Estadistica;
 import asw.DBManagement.model.Sugerencia;
 import asw.DBManagement.persistence.CiudadanoRepository;
 import asw.estadistica.EstadisticaService;
+import asw.listeners.MessageListener.UpvoteEvent;
 
 @Controller
 public class ControladorHTML {
@@ -33,12 +34,6 @@ public class ControladorHTML {
 	
 	@Autowired
 	private CiudadanoRepository repositorio;
-	
-	private static List<Sugerencia> sugerencias = new ArrayList<>();
-	
-	public static List<Sugerencia> getSugerencias(){
-		return sugerencias;
-	}
 	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -137,6 +132,7 @@ public class ControladorHTML {
 
 	@RequestMapping(path="/userPriv", method=RequestMethod.GET)
 	public String popularidadSugerencia(@RequestBody String parametros, Model modelo) {
+		List<Sugerencia> sugerencias = new ArrayList<>();
 		//metodo que trae una lista usuarios
 		//Implementar metodo para sacar la lista de usuarios de una misma categoria
 		Date fechaActual = new Date();
@@ -156,20 +152,21 @@ public class ControladorHTML {
 	public void newSugerence(Sugerencia data){
 		
 		System.out.println("Evento escuchado!");
-		SseEventBuilder newSugerenceEvent = SseEmitter.event().name("newSugerence").data("{ \"title\":\"" + data.getTitulo() + "\"}");
+		SseEventBuilder newSugerenceEvent = SseEmitter.event().name("evento").data("{ \"tipo\": \"newSugerence\" , \"title\":\"" + data.getTitulo() + "\"}");
 		sendEvent(newSugerenceEvent);
 	}
 	
 	@RequestMapping( value = "/newComentary")
 	@EventListener
 	public void newComentary(Comentario data){
-		SseEventBuilder newComentaryEvent = SseEmitter.event().name("newComentary").data("{ \"title\":\"" + data.getSugerencia().getTitulo() + "\" , \"votos\": \""+ data.getSugerencia().getVotos() +"\" }");
+		SseEventBuilder newComentaryEvent = SseEmitter.event().name("evento").data("{ \"tipo\": \"newComentary\" ,  \"title\":\"" + data.getSugerencia().getTitulo() + "\"  }");
 		sendEvent(newComentaryEvent);
 	}
 	
+	@RequestMapping( value = "/upvoteSugerence")
 	@EventListener
-	public void upvoteSugerence(String data){
-		SseEventBuilder upvoteSugerenceEvent = SseEmitter.event().name("upvoteSugerence").data("{ \"title\":\"" + data + "\"}");
+	public void upvoteSugerence(UpvoteEvent data){
+		SseEventBuilder upvoteSugerenceEvent = SseEmitter.event().name("evento").data("{ \"tipo\": \"upvote\" , \"title\":\"" + data.getTitulo() + "\" , \"votes\": \""+ data.getVotos()+ "\" }");
 		sendEvent(upvoteSugerenceEvent);
 	}
 	
