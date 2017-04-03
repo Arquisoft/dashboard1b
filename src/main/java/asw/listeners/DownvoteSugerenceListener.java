@@ -11,7 +11,7 @@ import asw.DBManagement.model.Opinion;
 
 @ManagedBean
 public class DownvoteSugerenceListener implements ApplicationEventPublisherAware{
-private static final Logger logger = Logger.getLogger(NewSugerenceListener.class);
+private static final Logger logger = Logger.getLogger(MessageListener.class);
     
     private ApplicationEventPublisher publisher;
 
