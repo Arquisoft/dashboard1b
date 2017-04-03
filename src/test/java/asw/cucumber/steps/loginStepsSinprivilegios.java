@@ -3,6 +3,7 @@ package asw.cucumber.steps;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import asw.util.SeleniumUtils;
 import cucumber.api.DataTable;
@@ -30,7 +32,8 @@ public class loginStepsSinprivilegios {
 	  
  @Before
  public void setUp() throws Exception {
-	    driver = SeleniumUtils.getDriver("test1"); 
+	    driver = new HtmlUnitDriver();
+	    usuarios = new ArrayList<>();
 	    baseUrl = "http://localhost:8090/";
 	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	    Map<String,String> Benji = new HashMap<String, String>();
@@ -40,12 +43,10 @@ public class loginStepsSinprivilegios {
 	    
 	  }
 	@Given("^una lista de usuarios:$")
-	public void una_lista_de_usuarios(DataTable arg1) throws Throwable {
-		
-		 assertEquals(1,usuarios.size());
-	   //throw new PendingException();
-		
-	}
+	 public void una_lista_de_usuarios(List<Map<String,String>>arg1)throws Throwable {
+		  
+		  assertEquals(1,usuarios.size());
+	  }
 
 	@When("^logueo con el correo sin privilegios \"([^\"]*)\" y la contraseña \"([^\"]*)\"$")
 	public void logueo_con_el_correo_sin_privilegios_y_la_contraseña(String arg1, String arg2) throws Throwable {
@@ -53,14 +54,14 @@ public class loginStepsSinprivilegios {
 	  	arg2 = "123456";
 	  	
 	  	boolean esta = false;
-
+	  	
 		for (Map<String, String> map : usuarios) {
 			if (map.get("email").equals(arg1) && map.get("password").equals(arg2)) {
 				esta = true;
 			}
 		}
 		assertEquals(true, esta);
-		
+		System.out.println("PASA POR AQUI ASFNASÑGUFJ");
 		 driver.findElement(By.name("email")).clear();
 		 driver.findElement(By.name("email")).sendKeys("nakamura@gmail.com");
 		 driver.findElement(By.name("password")).clear();

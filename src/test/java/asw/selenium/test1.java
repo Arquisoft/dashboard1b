@@ -31,13 +31,14 @@ public class test1 {
   public void setUp() throws Exception {
     driver = SeleniumUtils.getDriver("test1"); 
     baseUrl = "http://localhost:8090/";
+    driver.get(baseUrl);
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	
   }
 
   @Test
   public void testNakamura() throws Exception {
-    driver.get(baseUrl + "/");
+    
     driver.findElement(By.name("email")).clear();
     driver.findElement(By.name("email")).sendKeys("nakamura@gmail.com");
     driver.findElement(By.name("password")).clear();
