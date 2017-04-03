@@ -34,7 +34,7 @@ public class KafkaProducer {
     private Comentario comentario;
 
 
-    @Scheduled(fixedDelay = 15000)
+    @Scheduled(fixedDelay = 30000)
     public void sendNewSuggestion() {
         String sugerenciaJSON = "";
         sugerencia = randomGenerator.newSugerencia();
@@ -47,7 +47,7 @@ public class KafkaProducer {
         }
     }
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 11000)
     public void sendNewComentario() {
         String comentarioJSON = "";
         comentario = randomGenerator.newComentario();
@@ -55,6 +55,20 @@ public class KafkaProducer {
         try {
             comentarioJSON = mapper.writeValueAsString(comentario);
             send("comentarios", comentarioJSON);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Scheduled(fixedDelay = 7000)
+    public void sendNewApoyo() {
+        String comentarioJSON = "";
+        comentario = randomGenerator.newComentario();
+        comentario.setTexto("");
+
+        try {
+            comentarioJSON = mapper.writeValueAsString(comentario);
+            send("apoyos", comentarioJSON);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
