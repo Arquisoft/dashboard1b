@@ -49,5 +49,32 @@ public class SugerenciaTest {
 		assertThat(suge.getNombre()).isEqualTo("nombreNuevo");
 		
 	}
+	@Test
+	public void getNumeroComentarios() throws Exception{
+		
+		assertThat(suge.getNumeroComentarios()).isEqualTo(numeroComentarios);
+	}
+	
+	@Test
+	public void getNumeroComentarios1() throws Exception{
+		
+		//assertThat(suge.getNumeroComentarios()).isEqualTo(numeroComentarios);
+		assertThat(suge.getNumeroComentarios()).isEqualTo(15);
+	}
+	@Test
+	public void setNumeroComentarios() throws Exception{
+		suge.setNumeroComentarios(1);
+		assertThat(suge.getNumeroComentarios()).isEqualTo(1);
+	}
+	@Test
+	public void getNumeroApoyos() throws Exception{
+		
+		assertThat(suge.getNumeroApoyos()).isEqualTo(numeroApoyos);
+	}
+	@Test
+	public void getNumeroApoyos1() throws Exception{
+		
+		assertThat(suge.getNumeroApoyos()).isEqualTo(10);
+	}
 	
 }
