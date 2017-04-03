@@ -29,10 +29,22 @@
 	 source.addEventListener('newSugerence', function(event){
 		 var sugerence = JSON.parse(event.data);
 		 var row = document.getElementById("table").insertRow(-1);
-		 row.insertCell(0).innerHTML = "<th>" + sugerence.title + "</th>";
-		 row.insertCell(1).innerHTML = "<th>" + 0 + "</th>";
-		 row.insertCell(2).innerHTML = "<th>" + 0 + "</th>";
+		 row.insertCell(0).innerHTML = "<td>" + sugerence.title + "</td>";
+		 row.insertCell(1).innerHTML = "<td>" + 0 + "</td>";
+		 row.insertCell(2).innerHTML = "<td>" + 0 + "</td>";
 	 });
+	 
+	 source.addEventListener('newComentary', function(event){
+		 var comentary = JSON.parse(event.data);
+		 var rows = document.getElementById("table").rows;
+		 for(i=0; i < rows.length; i++){
+			 if(rows[i].cells[0].textContent == comentary.title){
+				 rows[i].cells[1].outerHTML = "<td>" + comentary.votos "</td>;
+				 break;
+			 }
+		 }
+	 });
+	 
 </script>
 </head>
 

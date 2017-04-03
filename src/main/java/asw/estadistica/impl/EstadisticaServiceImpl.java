@@ -17,10 +17,10 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 
 	@Override
 	public Estadistica nuevaSugerencia(Sugerencia sugerencia) {
-		Map<String, Double> campos = new HashMap<>();
+		Map<String, Integer> campos = new HashMap<>();
 		
-		campos.put("Comentarios",0.0);
-		campos.put("Apoyos",sugerencia.getVotos()*1.0);
+		campos.put("Comentarios",0);
+		campos.put("Apoyos",sugerencia.getVotos()*1);
 		
 		return new Estadistica(sugerencia.getTitulo(),campos);
 
@@ -48,7 +48,7 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 	@Override
 	public Estadistica nuevoComentario(Comentario comentario, Estadistica estadistica) {
 		
-		estadistica.getCampos().put("Comentarios", estadistica.getCampos().get("Comentarios")+1.0);
+		estadistica.getCampos().put("Comentarios", estadistica.getCampos().get("Comentarios")+1);
 		
 		return estadistica;
 	}

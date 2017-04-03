@@ -40,7 +40,7 @@ public class MessageListener implements ApplicationEventPublisherAware{
     private ApplicationEventPublisher publisher;
 
     @KafkaListener(topics = KafkaTopics.NEW_SUGERENCE)
-    public void listenSugerencias(@Payload String data) {
+    public void listenSugerencias(String data) {
     	
     	try {
 			Sugerencia sugerencia = mapper.readValue(data, Sugerencia.class);
@@ -62,9 +62,10 @@ public class MessageListener implements ApplicationEventPublisherAware{
     	
         logger.info("New message received: \"" + data + "\"");
     }
+    
 
     @KafkaListener( topics = KafkaTopics.NEW_COMENTARY)
-    public void listenComentarios(@Payload String data) {
+    public void listenComentarios(String data) {
     	
     	try {
 			Comentario comentario = mapper.readValue(data, Comentario.class);
@@ -81,7 +82,6 @@ public class MessageListener implements ApplicationEventPublisherAware{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
     	
         logger.info("New message received: \"" + data + "\"");
     }

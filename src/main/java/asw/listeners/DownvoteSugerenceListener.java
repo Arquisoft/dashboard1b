@@ -7,8 +7,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.kafka.annotation.KafkaListener;
 
-import asw.DBManagement.model.Opinion;
-
 @ManagedBean
 public class DownvoteSugerenceListener implements ApplicationEventPublisherAware{
 private static final Logger logger = Logger.getLogger(MessageListener.class);
