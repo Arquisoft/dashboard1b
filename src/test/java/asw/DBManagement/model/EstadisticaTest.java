@@ -52,6 +52,13 @@ public void setTitulo() throws Exception{
 	assertThat(est.getTitulo()).isEqualTo("Titulo2");
 }
 
-
+@Test
+public void getCampos() throws Exception{
+	assertThat(est.getCampos()).isEqualTo(c);
+}
+@Test
+public void getCampos1() throws Exception{
+	assertThat(est.getCampos().size()).isEqualTo(2);
+}
 
 }
