@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <title>Popularidad de las sugerencias</title>
@@ -29,26 +28,21 @@
 	 source.addEventListener('evento', function(event){
 		 var sugerence = JSON.parse(event.data);
 		 var t = document.getElementById("table");
-		 if(sugerence.tipo == "newSugerence"){
+		 if(sugerence.tipo === "newSugerence"){
 			 var row = t.insertRow(-1);
 			 row.insertCell(0).innerHTML = "<td>" + sugerence.title + "</td>";
 			 row.insertCell(1).innerHTML = "<td>" + 0 + "</td>";
 			 row.insertCell(2).innerHTML = "<td>" + 0 + "</td>";
 		 }
-		 else if ( sugerence.tipo == "newComentary"){
-			 for (var i = 0; i < t.rows.length; i++){
-				    if(t.rows[i].cells[0].textContent == sugerence.title){
-				     t.rows[i].cells[1].innerHTML = "<td>" + parseInt(t.rows[i].cells[1].textContext)+1 + "</td>";
-				    }
-			 }
+		 else if ( sugerence.tipo === "newComentary"){
+			 $('th').filter(function() {
+					return $(this).text() === "Titulo 1";
+				}).closest('tr').children('td').eq(1).html(33);
 		 }
-		 else if( sugerence.tipo == "upvote"){
-			 for (var i=0; i < t.rows.length; i++){
-				    if(t.rows[i].cells[0].textContent == sugerence.title){
-				     t.rows[i].cells[2].innerHTML = "<td>" + sugerence.votos +"</td>";
-				     break;
-				    }
-			 }
+		 else if( sugerence.tipo === "upvote"){
+			 $('th').filter(function() {
+					return $(this).text() === sugerence.title;
+				}).closest('tr').children('td').eq(2).html(sugerence.votos);
 		 }
 	 });
 	 
