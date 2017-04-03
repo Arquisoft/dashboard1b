@@ -163,16 +163,16 @@ public class ControladorHTML {
 	@RequestMapping( value = "/newComentary")
 	@EventListener
 	public void newComentary(Comentario data){
-		SseEventBuilder newComentaryEvent = SseEmitter.event().name("newComentary").data("{ \"title\":\"" + 51 + "\" , \"votos\": \""+ 53+"\" }");
+		SseEventBuilder newComentaryEvent = SseEmitter.event().name("newComentary").data("{ \"title\":\"" + data.getSugerencia().getTitulo() + "\" , \"votos\": \""+ data.getSugerencia().getVotos() +"\" }");
 		sendEvent(newComentaryEvent);
 	}
 	
-//	@EventListener
-//	public void upvoteSugerence(String data){
-//		SseEventBuilder upvoteSugerenceEvent = SseEmitter.event().name("upvoteSugerence").data(data);
-//		sendEvent(upvoteSugerenceEvent);
-//	}
-//	
+	@EventListener
+	public void upvoteSugerence(String data){
+		SseEventBuilder upvoteSugerenceEvent = SseEmitter.event().name("upvoteSugerence").data("{ \"title\":\"" + data + "\"}");
+		sendEvent(upvoteSugerenceEvent);
+	}
+	
 //	@EventListener
 //	public void downvoteSugerence(String data){
 //		SseEventBuilder downvoteSugerenceEvent = SseEmitter.event().name("downvoteSugerence").data(data);
