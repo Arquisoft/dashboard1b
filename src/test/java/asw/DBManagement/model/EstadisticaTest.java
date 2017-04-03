@@ -85,4 +85,22 @@ public void getValores1() throws Exception{
 	assertThat(est.getValores().size()).isEqualTo(2);
 }
 
+
+@Test
+public void setValores() throws Exception{
+	List<Double> lista = new ArrayList<Double>();
+	lista.add(2.3);
+	est.setValores(lista);
+	
+	assertThat(est.getValores()).isEqualTo(lista);
+}
+@Test
+public void setValores1() throws Exception{
+	List<Double> lista = new ArrayList<Double>();
+	lista.add(2.3);
+	est.setValores(lista);
+	
+	assertThat(est.getValores().size()).isEqualTo(1);
+}
+
 }
