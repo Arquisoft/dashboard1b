@@ -1,7 +1,5 @@
 package asw.DBManagement.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -52,7 +50,6 @@ public class Sugerencia {
 		return Id;
 	}
 
-
 	public String getTitulo() {
 		return titulo;
 	}
@@ -91,4 +88,28 @@ public class Sugerencia {
 		return "Sugerencia [IdSugerencia=" + Id + ", titulo=" + titulo
 				+ ", fecha=" + fecha + ", aprobacion=" + aprobacion + ", votos=" + votos + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (Id ^ (Id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Sugerencia other = (Sugerencia) obj;
+		if (Id != other.Id)
+			return false;
+		return true;
+	}
+	
+	
 }

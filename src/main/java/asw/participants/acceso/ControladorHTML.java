@@ -8,21 +8,24 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.SseEventBuilder;
 
 import asw.DBManagement.model.Ciudadano;
 import asw.DBManagement.model.Comentario;
 import asw.DBManagement.model.Estadistica;
 import asw.DBManagement.model.Sugerencia;
 import asw.DBManagement.persistence.CiudadanoRepository;
+import asw.DBManagement.persistence.SugerenciaRepository;
 import asw.estadistica.EstadisticaService;
+import asw.listeners.MessageListener.UpvoteEvent;
 
 @Controller
 public class ControladorHTML {
@@ -32,6 +35,10 @@ public class ControladorHTML {
 	
 	@Autowired
 	private CiudadanoRepository repositorio;
+	
+	@Autowired
+	private SugerenciaRepository sugRepos;
+	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getHTML(Model modelo){
@@ -96,30 +103,30 @@ public class ControladorHTML {
 		}
 	}
 
-	private int edad(String fecha_nac) {     
-
-		Date fechaActual = new Date();
-		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-		String hoy = formato.format(fechaActual);
-		String[] dat1 = fecha_nac.split("-");
-		String[] dat2 = hoy.split("-");
-		int edad = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
-		int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
-		if (mes < 0) {
-			edad = edad - 1;
-		} else if (mes == 0) {
-			int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
-			if (dia > 0) {
-				edad = edad - 1;
-			}
-		}
-		return edad;
-
-	}
+//	private int edad(String fecha_nac) {     
+//
+//		Date fechaActual = new Date();
+//		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+//		String hoy = formato.format(fechaActual);
+//		String[] dat1 = fecha_nac.split("-");
+//		String[] dat2 = hoy.split("-");
+//		int edad = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+//		int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
+//		if (mes < 0) {
+//			edad = edad - 1;
+//		} else if (mes == 0) {
+//			int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+//			if (dia > 0) {
+//				edad = edad - 1;
+//			}
+//		}
+//		return edad;
+//
+//	}
 
 	@Autowired
 	private EstadisticaService estatService;
-
+	
 
 
 	public List<Estadistica> popularidadSugerencia(List<Sugerencia> sugerencia) {
@@ -129,90 +136,148 @@ public class ControladorHTML {
 
 	@RequestMapping(path="/userPriv", method=RequestMethod.GET)
 	public String popularidadSugerencia(@RequestBody String parametros, Model modelo) {
+		List<Sugerencia> sugerencias = (List<Sugerencia>) sugRepos.findAll();
 		//metodo que trae una lista usuarios
-		List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
 		//Implementar metodo para sacar la lista de usuarios de una misma categoria
-		Date fechaActual = new Date();
-		sugerencias.add(new Sugerencia("Titulo 1", fechaActual, true, 50));
-		sugerencias.add(new Sugerencia("Titulo 2", fechaActual, false, 25));
-		sugerencias.add(new Sugerencia("Titulo 3", fechaActual, false, 4));
-		sugerencias.add(new Sugerencia("Titulo 4", fechaActual, true, 12));
-		System.out.println("Pasa por aqui ");
+//		Date fechaActual = new Date();
+//		sugerencias.add(new Sugerencia("Titulo 1", fechaActual, true, 50));
+//		sugerencias.add(new Sugerencia("Titulo 2", fechaActual, false, 25));
+//		sugerencias.add(new Sugerencia("Titulo 3", fechaActual, false, 4));
+//		sugerencias.add(new Sugerencia("Titulo 4", fechaActual, true, 12));
+//		System.out.println("Pasa por aqui ");
 
 		List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);
 		modelo.addAttribute("estadisticas",estadisticas);
 		return "userPriv";
 	}
 	
-	
-	public String nuevaSugerencia(Sugerencia sugerencia,Model modelo)
-	{
-		if(modelo.containsAttribute("estadisticas")){
-			Estadistica esNueva =estatService.nuevaSugerencia(sugerencia);
-			@SuppressWarnings("unchecked")
-			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
-			estadisticas.add(esNueva);
-			modelo.addAttribute("estadisticas",estadisticas);
-		}
-		else
-		{
-			List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
-			sugerencias.add(sugerencia);
-			List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);	
-			modelo.addAttribute("estadisticas",estadisticas);
-		}
-		this.nuevoHecho();
-
-		return "userPriv";
+	@RequestMapping( value = "/newSugerence")
+	@EventListener
+	public void newSugerence(Sugerencia data){
+		
+		System.out.println("Evento escuchado!");
+		SseEventBuilder newSugerenceEvent = SseEmitter.event().name("evento").data("{ \"tipo\": \"newSugerence\" , \"title\":\"" + data.getTitulo() + "\"}");
+		sendEvent(newSugerenceEvent);
 	}
 	
-	public String nuevaComentario(Comentario comentario,Model modelo)
-	{
-		if(modelo.containsAttribute("estadisticas")){
-			@SuppressWarnings("unchecked")
-			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
-			for(Estadistica est : estadisticas){
-				
-				if(est.getIdSugerencia()==est.getIdSugerencia()){
-					estatService.nuevoComentario(comentario, est);
+	@RequestMapping( value = "/newComentary")
+	@EventListener
+	public void newComentary(Comentario data){
+
+
+		SseEventBuilder newComentaryEvent = SseEmitter.event().name("evento").data("{ \"tipo\": \"newComentary\" ,  \"title\":\"" + data.getSugerencia().getTitulo() +"\" }");
+		sendEvent(newComentaryEvent);
+	}
+	
+	@RequestMapping( value = "/upvoteSugerence")
+	@EventListener
+	public void upvoteSugerence(UpvoteEvent data){
+		SseEventBuilder upvoteSugerenceEvent = SseEmitter.event().name("evento").data("{ \"tipo\": \"upvote\" , \"title\":\"" + data.getTitulo() + "\" , \"votes\": \""+ (data.getVotos()+1)+ "\" }");
+		sendEvent(upvoteSugerenceEvent);
+	}
+	
+//	@EventListener
+//	public void downvoteSugerence(String data){
+//		SseEventBuilder downvoteSugerenceEvent = SseEmitter.event().name("downvoteSugerence").data(data);
+//		sendEvent(downvoteSugerenceEvent);
+//	}
+	
+	private void sendEvent(SseEventBuilder event){
+		synchronized (sseEmitters) {
+			for(SseEmitter emitter: sseEmitters){
+				try {
+					System.out.println("Enviando el evento");
+					emitter.send(event);
+				} catch (IOException e) {
+					e.printStackTrace();
+					
 				}
 			}
-			
-			
-			modelo.addAttribute("estadisticas",estadisticas);
-		}
-		
-		this.nuevoHecho();
-		return "userPriv";
-	}
-	
-	@RequestMapping (path = "/register", method = RequestMethod.GET)
-	public SseEmitter register() throws IOException {
-	   // log.info("Registering a stream.");
-
-	    SseEmitter emitter = new SseEmitter();
-
-	    synchronized (sseEmitters) {
-	        sseEmitters.add(emitter);
-	    }
-	    emitter.onCompletion(() -> sseEmitters.remove(emitter));
-
-	    return emitter;
-	}
-	
-	
-	public void nuevoHecho()
-	{
-		synchronized (sseEmitters) {
-		    sseEmitters.forEach((SseEmitter emitter) -> {
-		        try {
-		            emitter.send(1);
-		        } catch (IOException e) {
-		            emitter.complete();
-		            sseEmitters.remove(emitter);
-		        }
-		    });
 		}
 	}
+	
+	@RequestMapping("/userPriv/updates")
+	SseEmitter updateHTML() {
+		SseEmitter sseEmitter = new SseEmitter();
+		synchronized (this.sseEmitters) {
+			this.sseEmitters.add(sseEmitter);
+			sseEmitter.onCompletion(() -> {
+				synchronized (this.sseEmitters) {
+					this.sseEmitters.remove(sseEmitter);
+				}
+			});
+		}
+		return sseEmitter;
+	}
+	
+//	public String nuevaSugerencia(Sugerencia sugerencia,Model modelo)
+//	{
+//		if(modelo.containsAttribute("estadisticas")){
+//			Estadistica esNueva =estatService.nuevaSugerencia(sugerencia);
+//			@SuppressWarnings("unchecked")
+//			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
+//			estadisticas.add(esNueva);
+//			modelo.addAttribute("estadisticas",estadisticas);
+//		}
+//		else
+//		{
+//			List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
+//			sugerencias.add(sugerencia);
+//			List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);	
+//			modelo.addAttribute("estadisticas",estadisticas);
+//		}
+//		this.nuevoHecho();
+//
+//		return "userPriv";
+//	}
+//	
+//	public String nuevaComentario(Comentario comentario,Model modelo)
+//	{
+//		if(modelo.containsAttribute("estadisticas")){
+//			@SuppressWarnings("unchecked")
+//			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
+//			for(Estadistica est : estadisticas){
+//				
+//				if(est.getIdSugerencia()==est.getIdSugerencia()){
+//					estatService.nuevoComentario(comentario, est);
+//				}
+//			}
+//			
+//			
+//			modelo.addAttribute("estadisticas",estadisticas);
+//		}
+//		
+//		this.nuevoHecho();
+//		return "userPriv";
+//	}
+//	
+//	@RequestMapping (path = "/register", method = RequestMethod.GET)
+//	public SseEmitter register() throws IOException {
+//	   // log.info("Registering a stream.");
+//
+//	    SseEmitter emitter = new SseEmitter();
+//
+//	    synchronized (sseEmitters) {
+//	        sseEmitters.add(emitter);
+//	    }
+//	    emitter.onCompletion(() -> sseEmitters.remove(emitter));
+//
+//	    return emitter;
+//	}
+//	
+//	
+//	public void nuevoHecho()
+//	{
+//		synchronized (sseEmitters) {
+//		    sseEmitters.forEach((SseEmitter emitter) -> {
+//		        try {
+//		            emitter.send(1);
+//		        } catch (IOException e) {
+//		            emitter.complete();
+//		            sseEmitters.remove(emitter);
+//		        }
+//		    });
+//		}
+//	}
 	
 }

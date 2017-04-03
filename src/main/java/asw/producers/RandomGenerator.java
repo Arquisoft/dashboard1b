@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -42,9 +43,15 @@ public class RandomGenerator {
 
     protected Comentario newComentario() {
         Comentario comentario = new Comentario(randomString(),newCiudadano());
-        Iterable<Sugerencia> sugerenciaIterable = sugerenciaRepository.findAll();
-        Long id = new Long(randomNumber(1,(int) sugerenciaIterable.spliterator().getExactSizeIfKnown())); //Not a good idea
-        comentario.setSugerencia(sugerenciaRepository.findOne(id));
+        List<Sugerencia> sugerenciaIterable = (List<Sugerencia>) sugerenciaRepository.findAll();
+        int id = randomNumber(0,sugerenciaIterable.size()-1);
+        Sugerencia aEscoger =sugerenciaIterable.get(id);
+        while(aEscoger.getTitulo()==null)
+        {
+        	id = randomNumber(0,sugerenciaIterable.size()-1);
+        	aEscoger =sugerenciaIterable.get(id);
+        }
+        comentario.setSugerencia(aEscoger);
         return comentario;
     }
 

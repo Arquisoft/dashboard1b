@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <title>Popularidad de las sugerencias</title>
 <script type="text/javascript">
 	var connect = function() {
-		var source = new EventSource('/register');
+		//var source = new EventSource('/userPriv/updates');
 		 // Handle correct opening of connection
         source.addEventListener('open', function (e) {
             console.log('Connected.');
         });
+		 
+		
 		
 		// Reconnect if the connection fails
 		source.addEventListener('error', function(e) {
@@ -21,18 +22,61 @@
 			}
 		}, false);
 	};
+	
+	var source = new EventSource('/userPriv/updates');
+	
+	 source.addEventListener('evento', function(event){
+		 var sugerence = JSON.parse(event.data);
+
+		 var t = document.getElementById("table");
+		 if(sugerence.tipo === "newSugerence"){
+			 var row = t.insertRow(-1);
+			 row.insertCell(0).innerHTML = "<td>" + sugerence.title + "</td>";
+			 row.insertCell(1).innerHTML = "<td>" + 0 + "</td>";
+			 row.insertCell(2).innerHTML = "<td>" + 0 + "</td>";
+		 }
+
+		 else if ( sugerence.tipo === "newComentary"){
+			 var ac = document.getElementsByTagName("tr");
+			 for (let elem of ac){
+				 var celdas = elem.children;   
+				 if(celdas[0].textContent === sugerence.title){
+					 var value = parseInt(celdas[1].textContent);		
+					 window.console.log(" El valor "+celdas[1].textContent+" el value "+value );
+
+					 celdas[1].textContent = value+1;
+				    }
+			 }
+		 }
+		 else if( sugerence.tipo === "upvote"){
+			 var ac = document.getElementsByTagName("tr");
+			 for (let elem of ac){
+				 var celdas = elem.children;      
+				 if(celdas[0].textContent === sugerence.title){
+					 var value = parseInt(celdas[2].textContent);		
+					 window.console.log(" El valor "+celdas[2].textContent+" el value "+value );
+				
+					 celdas[2].textContent = value+1;
+				    
+				     break;
+				    }
+			 }
+
+		 }
+	 });
+	 
 </script>
 </head>
 
 <body>
 	<h1>Popularidad de las sugerencias</h1>
-	<table border="1">
+	<table id="table" border="1">
 		<tr>
 			<th>Nombre</th>
 			<th>Comentarios</th>
 			<th>Apoyos</th>
 		</tr>
-		<tr th:each="est : ${estadisticas}">
+		  <tr th:each="est : ${estadisticas}">
 			<td th:text="${est.titulo}">Onions</td>
 			<td th:text="${est.campos.get('Comentarios')}">2.41</td>
 			<td th:text="${est.campos.get('Apoyos')}">2.41</td>

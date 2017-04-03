@@ -6,9 +6,9 @@ public class Estadistica {
 	
 	private String titulo;
 	private long idSugerencia;
-	private Map<String,Double> campos;
+	private Map<String,Integer> campos;
 	
-	public Estadistica(String titulo, Map<String,Double> campos) {
+	public Estadistica(String titulo, Map<String, Integer> campos) {
 		super();
 		this.titulo = titulo;
 		this.campos = campos;
@@ -21,11 +21,11 @@ public class Estadistica {
 		this.titulo = titulo;
 	}
 
-	public Map<String, Double> getCampos() {
+	public Map<String, Integer> getCampos() {
 		return campos;
 	}
 
-	public void setCampos(Map<String, Double> campos) {
+	public void setCampos(Map<String, Integer> campos) {
 		this.campos = campos;
 	}
 
@@ -36,7 +36,5 @@ public class Estadistica {
 	public void setIdSugerencia(long idSugerencia) {
 		this.idSugerencia = idSugerencia;
 	}
-	
-	
 
 }
