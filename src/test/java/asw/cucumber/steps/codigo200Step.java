@@ -2,6 +2,7 @@ package asw.cucumber.steps;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -16,18 +17,25 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
-
 import asw.Application;
+import asw.util.SeleniumUtils;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
 @ContextConfiguration(classes=Application.class, loader=SpringApplicationContextLoader.class)
 @IntegrationTest
 @WebAppConfiguration
 public class codigo200Step{
 
-
-
-
+	 WebDriver driver = null; 
+	
+	 private String url = "http://localhost:8090/";
   
   @Autowired
   protected WebApplicationContext context;
@@ -38,6 +46,7 @@ public class codigo200Step{
   @Value("${local.server.port}")
   protected int port;
 
+  
   
   @When("^the client calls /$")
   public void the_client_calls() throws Throwable {
@@ -54,4 +63,34 @@ public class codigo200Step{
   @Then("^the client receives the string \"([^\"]*)\"$")
   public void the_client_receives_the_string(String str) throws Throwable {
    assertThat(result.getResponse().getContentAsString(), containsString(str));
-}}
+}
+  
+  @Given("^un usuario que va a la aplicasao$")
+  public void un_usuario_que_va_a_la_aplicasao() throws Throwable {
+	  //driver = new HtmlUnitDriver();
+	  driver =new  FirefoxDriver();
+	
+	  assertNotNull(driver);
+	  
+      driver.get(url); 
+  }
+  
+  @When("^me logueo con usuario privilegiado$")
+  public void me_logueo_con_usuario_privilegiado() throws Throwable 
+  {
+	  driver.findElement(By.id("email")).sendKeys("valduvieco@gmail.com");
+      driver.findElement(By.id("password")).sendKeys("123456");
+      driver.findElement(By.id("logearse")).click();
+      //logueado.
+  }
+
+  @Then("^me muestra el html usuario privilegiado$")
+  public void me_muestra_el_html_usuario_privilegiado() throws Throwable {
+	  String texto = "Popularidad de las sugerencias";
+	    SeleniumUtils.textoPresentePagina(driver, texto);
+	  
+  }
+
+
+
+}
