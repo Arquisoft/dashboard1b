@@ -159,7 +159,7 @@ public class ControladorHTML {
 	@RequestMapping( value = "/newComentary")
 	@EventListener
 	public void newComentary(Comentario data){
-		SseEventBuilder newComentaryEvent = SseEmitter.event().name("evento").data("{ \"tipo\": \"newComentary\" ,  \"title\":\"" + data.getSugerencia().getTitulo() + "\"  }");
+		SseEventBuilder newComentaryEvent = SseEmitter.event().name("evento").data("{ \"tipo\": \"newComentary\" ,  \"title\":\"" + data.getSugerencia().getTitulo() +"\" }");
 		sendEvent(newComentaryEvent);
 	}
 	

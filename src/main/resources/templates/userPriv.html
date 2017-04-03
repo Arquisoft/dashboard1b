@@ -35,14 +35,18 @@
 			 row.insertCell(2).innerHTML = "<td>" + 0 + "</td>";
 		 }
 		 else if ( sugerence.tipo === "newComentary"){
-			 $('th').filter(function() {
-					return $(this).text() === "Titulo 1";
-				}).closest('tr').children('td').eq(1).html(33);
+			 var value = parseInt(document.getElementsByTagName("tr").filter(function() {
+					return this.children('td').eq(0).text() === "Titulo 1";
+				}).children('td').eq(1).text());
+			 
+			 document.getElementsByTagName("tr").filter(function() {
+					return this.children('td').eq(0).text() === "Titulo 1";
+				}).children('td').eq(1).html(value+1); 
 		 }
 		 else if( sugerence.tipo === "upvote"){
-			 $('th').filter(function() {
-					return $(this).text() === sugerence.title;
-				}).closest('tr').children('td').eq(2).html(sugerence.votos);
+			 document.getElementsByTagName("tr").filter(function() {
+					return this.children('td').eq(0).text() === "Titulo 1";
+				}).children('td').eq(2).html(sugerence.votos);
 		 }
 	 });
 	 
@@ -57,8 +61,8 @@
 			<th>Comentarios</th>
 			<th>Apoyos</th>
 		</tr>
-		<tr th:each="est : ${estadisticas}">
-			<td th:text="${est.titulo}">Onions</td>
+		<tr  th:each="est : ${estadisticas}">
+			<td id="${est.titulo}" th:text="${est.titulo}">Onions</td>
 			<td th:text="${est.campos.get('Comentarios')}">2.41</td>
 			<td th:text="${est.campos.get('Apoyos')}">2.41</td>
 		</tr>
