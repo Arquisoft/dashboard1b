@@ -31,7 +31,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 @ContextConfiguration(classes=Application.class, loader=SpringApplicationContextLoader.class)
 @IntegrationTest
 @WebAppConfiguration
-public class codigo200Step{
+public class loginStep{
 
 	 WebDriver driver = null; 
 	
@@ -65,7 +65,7 @@ public class codigo200Step{
    assertThat(result.getResponse().getContentAsString(), containsString(str));
 }
   
-  @Given("^un usuario que va a la aplicasao$")
+  @Given("^un usuario que va a la aplicacion$")
   public void un_usuario_que_va_a_la_aplicasao() throws Throwable {
 	  //driver = new HtmlUnitDriver();
 	  driver =new  FirefoxDriver();
@@ -90,7 +90,22 @@ public class codigo200Step{
 	    SeleniumUtils.textoPresentePagina(driver, texto);
 	  
   }
-
+  
+  @When("^me logueo con usuario sin privilegios$")
+  public void me_logueo_con_usuario_sin_privilegios() throws Throwable {
+	  driver.findElement(By.id("email")).sendKeys("nakamura@gmail.com");
+      driver.findElement(By.id("password")).sendKeys("123456");
+      driver.findElement(By.id("logearse")).click();
+      //logueado
+  }
+  
+  
+  @Then("^me muestra el html usuario sin privilegios$")
+  public void me_muestra_el_html_usuario_sin_privilegios() throws Throwable {
+	  
+	  String texto = "USUARIO SIN PRIVILEGIOS";
+	    SeleniumUtils.textoPresentePagina(driver, texto);
+  }
 
 
 }
