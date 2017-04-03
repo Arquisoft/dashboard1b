@@ -30,23 +30,28 @@
 		 var sugerence = JSON.parse(event.data);
 
 		 var t = document.getElementById("table");
-		 if(sugerence.tipo == "newSugerence"){
+		 if(sugerence.tipo === "newSugerence"){
 			 var row = t.insertRow(-1);
 			 row.insertCell(0).innerHTML = "<td>" + sugerence.title + "</td>";
 			 row.insertCell(1).innerHTML = "<td>" + 0 + "</td>";
 			 row.insertCell(2).innerHTML = "<td>" + 0 + "</td>";
 		 }
-		 else if ( sugerence.tipo == "newComentary"){
-			 for (var i = 0; i < t.rows.length; i++){
-				    if(t.rows[i].cells[0].textContent == sugerence.title){
-				     t.rows[i].cells[1].innerHTML = "<td>" + parseInt(t.rows[i].cells[1].textContext)+1 + "</td>";
+		 
+		 else if ( sugerence.tipo === "newComentary"){
+			 var ac = document.getElementsByTagName("tr");
+			 
+			 for (var i = 0; i < ac.length; i++){
+				    if(ac.cells[0].textContent == sugerence.title){
+				     ac.cells[1].innerHTML = "<td>" + parseInt(ac.cells[1].textContext)+1 + "</td>";
 				    }
 			 }
 		 }
-		 else if( sugerence.tipo == "upvote"){
-			 for (var i=0; i < t.rows.length; i++){
-				    if(t.rows[i].cells[0].textContent == sugerence.title){
-				     t.rows[i].cells[2].innerHTML = "<td>" + sugerence.votos +"</td>";
+		 else if( sugerence.tipo === "upvote"){
+			 var ac = document.getElementsByTagName("tr");
+			 
+			 for (var i=0; i < ac.length; i++){
+				    if(ac.cells[0].textContent == sugerence.title){
+				     ac.cells[2].innerHTML = "<td>" + sugerence.votos +"</td>";
 				     break;
 				    }
 			 }

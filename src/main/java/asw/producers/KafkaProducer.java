@@ -46,7 +46,7 @@ public class KafkaProducer {
             e.printStackTrace();
         }
     }
-
+/*
     @Scheduled(fixedDelay = 11000)
     public void sendNewComentario() {
         String comentarioJSON = "";
@@ -73,7 +73,7 @@ public class KafkaProducer {
             e.printStackTrace();
         }
     }
-
+*/
     public void send(String topic, String data) {
         ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, data);
         future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
