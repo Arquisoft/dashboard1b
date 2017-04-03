@@ -81,19 +81,5 @@ public class SugerenciaTest {
 		suge.setNumeroApoyos(1);
 		assertThat(suge.getNumeroApoyos()).isEqualTo(1);
 	}
-	@Test
-	public void getNumeroContra() throws Exception{
-		
-		assertThat(suge.getNumeroContra()).isEqualTo(numeroContra);
-	}
-	@Test
-	public void getNumeroContra1() throws Exception{
-		
-		assertThat(suge.getNumeroContra()).isEqualTo(2);
-	}
-	@Test
-	public void setNumeroContra() throws Exception{
-		suge.setNumeroContra(1);
-		assertThat(suge.getNumeroContra()).isEqualTo(1);
-	}
+	
 }
