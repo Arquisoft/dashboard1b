@@ -1,46 +1,115 @@
 package asw.DBManagement.model;
 
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Sugerencia {
 
-	private String nombre;
-	private int numeroComentarios;
-	private int numeroApoyos;
-	private int numeroContra;
-
-	public Sugerencia(String nombre, int numeroComentarios, int numeroApoyos, int numeroContra) {
+	@Id
+	@GeneratedValue
+	private long Id;
+	private String titulo;
+	private Date fecha;
+	private boolean aprobacion;
+	private int votos;
+	
+	@ManyToOne private Ciudadano ciudadano;
+	
+	public Sugerencia(String titulo, Date fecha, boolean aprobacion, int votos) {
 		super();
-		this.nombre = nombre;
-		this.numeroComentarios = numeroComentarios;
-		this.numeroApoyos = numeroApoyos;
-		this.numeroContra = numeroContra;
+		this.titulo = titulo;
+		this.fecha = fecha;
+		this.aprobacion = aprobacion;
+		this.votos = votos;
+	}
+	
+	public Sugerencia(String titulo, Date fecha, boolean aprobacion, int votos , Ciudadano proveedor) {
+		super();
+		this.titulo = titulo;
+		this.fecha = fecha;
+		this.aprobacion = aprobacion;
+		this.votos = votos;
+		this.ciudadano=proveedor;
+	}
+	
+	public Sugerencia(){}
+	public Ciudadano getProveedor(){
+		return ciudadano;
+	}
+	
+	public void _setCiudadano(Ciudadano ciudadano){
+		this.ciudadano = ciudadano;
+	}
+	
+	public long getId() {
+		return Id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getTitulo() {
+		return titulo;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
-	public int getNumeroComentarios() {
-		return numeroComentarios;
+
+	public Date getFecha() {
+		return fecha;
 	}
-	public void setNumeroComentarios(int numeroComentarios) {
-		this.numeroComentarios = numeroComentarios;
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
-	public int getNumeroApoyos() {
-		return numeroApoyos;
+
+	public boolean isAprobacion() {
+		return aprobacion;
 	}
-	public void setNumeroApoyos(int numeroApoyos) {
-		this.numeroApoyos = numeroApoyos;
+
+	public void setAprobacion(boolean aprobacion) {
+		this.aprobacion = aprobacion;
 	}
-	public int getNumeroContra() {
-		return numeroContra;
+
+	public int getVotos() {
+		return votos;
 	}
-	public void setNumeroContra(int numeroContra) {
-		this.numeroContra = numeroContra;
+
+	public void setVotos(int votos) {
+		this.votos = votos;
 	}
 
 
+	@Override
+	public String toString() {
+		return "Sugerencia [IdSugerencia=" + Id + ", titulo=" + titulo
+				+ ", fecha=" + fecha + ", aprobacion=" + aprobacion + ", votos=" + votos + "]";
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (Id ^ (Id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Sugerencia other = (Sugerencia) obj;
+		if (Id != other.Id)
+			return false;
+		return true;
+	}
+	
+	
 }

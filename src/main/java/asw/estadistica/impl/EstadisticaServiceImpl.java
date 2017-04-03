@@ -1,10 +1,13 @@
 package asw.estadistica.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import asw.DBManagement.model.Comentario;
 import asw.DBManagement.model.Estadistica;
 import asw.DBManagement.model.Sugerencia;
 import asw.estadistica.EstadisticaService;
@@ -13,26 +16,18 @@ import asw.estadistica.EstadisticaService;
 public class EstadisticaServiceImpl implements EstadisticaService {
 
 	@Override
-	public Estadistica popularidadSugerencia(Sugerencia sugerencia) {
-		List<String> campos = new ArrayList<>();
+	public Estadistica nuevaSugerencia(Sugerencia sugerencia) {
+		Map<String, Integer> campos = new HashMap<>();
 		
-		List<Double> valores = new ArrayList<>();
-
+		campos.put("Comentarios",0);
+		campos.put("Apoyos",sugerencia.getVotos()*1);
 		
-		
-		campos.add("Comentarios");
-		valores.add(sugerencia.getNumeroComentarios()*1.0);
-		
-
-		campos.add("Apoyos");
-		valores.add(sugerencia.getNumeroApoyos()*1.0);
-
-		campos.add("Repulsas");
-		valores.add(sugerencia.getNumeroContra()*1.0);
-		
-		return new Estadistica("Popularidad de "+sugerencia.getNombre(),campos, valores);
+		return new Estadistica(sugerencia.getTitulo(),campos);
 
 	}
+	
+	
+	
 
 	@Override
 	public List<Estadistica> listaPopularidadSugerencia(List<Sugerencia> sugerencia) {
@@ -41,10 +36,21 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		
 		for(Sugerencia su : sugerencia)
 		{
-			devuelto.add(this.popularidadSugerencia(su));
+			devuelto.add(this.nuevaSugerencia(su));
 		}
 		
 		return devuelto;
+	}
+
+
+
+
+	@Override
+	public Estadistica nuevoComentario(Comentario comentario, Estadistica estadistica) {
+		
+		estadistica.getCampos().put("Comentarios", estadistica.getCampos().get("Comentarios")+1);
+		
+		return estadistica;
 	}
 
 }
