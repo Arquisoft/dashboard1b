@@ -70,8 +70,8 @@ public class MessageListener implements ApplicationEventPublisherAware{
 			Comentario comentario = mapper.readValue(data, Comentario.class);
 			logger.info("*****************\n"+"Comentario: "+comentario.getTexto());
 			Comentario com =comentario;
-			com.setSugerencia(null);
-			comRep.save(com);
+//			com.setSugerencia(null);
+//			comRep.save(com);
 			publisher.publishEvent(comentario);
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
@@ -89,7 +89,7 @@ public class MessageListener implements ApplicationEventPublisherAware{
     }
     
     @KafkaListener( topics = KafkaTopics.UPVOTE_SUGERENCE)
-    public void listenApoyo(@Payload String data) {
+    public void listenApoyo(String data) {
     	try {
 			Comentario comentario = mapper.readValue(data, Comentario.class);
 			logger.info("*****************\n"+"Apoyo: "+comentario.getSugerencia().getTitulo());
@@ -109,6 +109,8 @@ public class MessageListener implements ApplicationEventPublisherAware{
 		}
         logger.info("New message received: \"" + data + "\"");
     }
+    
+    
     
     
     @Override

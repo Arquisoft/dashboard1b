@@ -34,16 +34,16 @@
 		 row.insertCell(2).innerHTML = "<td>" + 0 + "</td>";
 	 });
 	 
-	 source.addEventListener('newComentary', function(event){
+<!--	 source.addEventListener('newComentary', function(event){
 		 var comentary = JSON.parse(event.data);
 		 var rows = document.getElementById("table").rows;
 		 for(i=0; i < rows.length; i++){
 			 if(rows[i].cells[0].textContent == comentary.title){
-				 rows[i].cells[1].outerHTML = "<td>" + comentary.votos "</td>;
+				 rows[i].cells[1].outerHTML = "<td>" + comentary.votos "</td>"";
 				 break;
 			 }
 		 }
-	 });
+	 }); -->
 	 
 </script>
 </head>
