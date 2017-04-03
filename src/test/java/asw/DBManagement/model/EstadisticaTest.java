@@ -60,5 +60,19 @@ public void getCampos() throws Exception{
 public void getCampos1() throws Exception{
 	assertThat(est.getCampos().size()).isEqualTo(2);
 }
-
+@Test
+public void setCampos() throws Exception{
+	List<String> lista = new ArrayList<String>();
+	lista.add("campoNuevo");
+	est.setCampos(lista);
+	assertThat(est.getCampos()).isEqualTo(lista);
+	
+}
+@Test
+public void setCampos1() throws Exception{
+	List<String> lista = new ArrayList<String>();
+	lista.add("campoNuevo");
+	est.setCampos(lista);
+	assertThat(est.getCampos().size()).isEqualTo(1);
+}
 }
