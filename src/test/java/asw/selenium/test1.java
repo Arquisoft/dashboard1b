@@ -1,4 +1,4 @@
-package pruebas;
+package asw.selenium;
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +14,7 @@ import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import asw.Application;
+import asw.util.SeleniumUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
