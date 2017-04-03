@@ -6,7 +6,7 @@
 <title>Popularidad de las sugerencias</title>
 <script type="text/javascript">
 	var connect = function() {
-		var source = new EventSource('/userPriv/updates');
+		//var source = new EventSource('/userPriv/updates');
 		 // Handle correct opening of connection
         source.addEventListener('open', function (e) {
             console.log('Connected.');
@@ -34,7 +34,7 @@
 		 row.insertCell(2).innerHTML = "<td>" + 0 + "</td>";
 	 });
 	 
-<!--	 source.addEventListener('newComentary', function(event){
+		 source.addEventListener('newComentary', function(event){
 		 var comentary = JSON.parse(event.data);
 		 var rows = document.getElementById("table").rows;
 		 for(i=0; i < rows.length; i++){
@@ -43,7 +43,7 @@
 				 break;
 			 }
 		 }
-	 }); -->
+	 });
 	 
 </script>
 </head>
