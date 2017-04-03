@@ -103,27 +103,6 @@ public class ControladorHTML {
 		}
 	}
 
-//	private int edad(String fecha_nac) {     
-//
-//		Date fechaActual = new Date();
-//		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-//		String hoy = formato.format(fechaActual);
-//		String[] dat1 = fecha_nac.split("-");
-//		String[] dat2 = hoy.split("-");
-//		int edad = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
-//		int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
-//		if (mes < 0) {
-//			edad = edad - 1;
-//		} else if (mes == 0) {
-//			int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
-//			if (dia > 0) {
-//				edad = edad - 1;
-//			}
-//		}
-//		return edad;
-//
-//	}
-
 	@Autowired
 	private EstadisticaService estatService;
 	
@@ -137,15 +116,6 @@ public class ControladorHTML {
 	@RequestMapping(path="/userPriv", method=RequestMethod.GET)
 	public String popularidadSugerencia(@RequestBody String parametros, Model modelo) {
 		List<Sugerencia> sugerencias = (List<Sugerencia>) sugRepos.findAll();
-		//metodo que trae una lista usuarios
-		//Implementar metodo para sacar la lista de usuarios de una misma categoria
-//		Date fechaActual = new Date();
-//		sugerencias.add(new Sugerencia("Titulo 1", fechaActual, true, 50));
-//		sugerencias.add(new Sugerencia("Titulo 2", fechaActual, false, 25));
-//		sugerencias.add(new Sugerencia("Titulo 3", fechaActual, false, 4));
-//		sugerencias.add(new Sugerencia("Titulo 4", fechaActual, true, 12));
-//		System.out.println("Pasa por aqui ");
-
 		List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);
 		modelo.addAttribute("estadisticas",estadisticas);
 		return "userPriv";
@@ -176,12 +146,6 @@ public class ControladorHTML {
 		sendEvent(upvoteSugerenceEvent);
 	}
 	
-//	@EventListener
-//	public void downvoteSugerence(String data){
-//		SseEventBuilder downvoteSugerenceEvent = SseEmitter.event().name("downvoteSugerence").data(data);
-//		sendEvent(downvoteSugerenceEvent);
-//	}
-	
 	private void sendEvent(SseEventBuilder event){
 		synchronized (sseEmitters) {
 			for(SseEmitter emitter: sseEmitters){
@@ -209,75 +173,5 @@ public class ControladorHTML {
 		}
 		return sseEmitter;
 	}
-	
-//	public String nuevaSugerencia(Sugerencia sugerencia,Model modelo)
-//	{
-//		if(modelo.containsAttribute("estadisticas")){
-//			Estadistica esNueva =estatService.nuevaSugerencia(sugerencia);
-//			@SuppressWarnings("unchecked")
-//			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
-//			estadisticas.add(esNueva);
-//			modelo.addAttribute("estadisticas",estadisticas);
-//		}
-//		else
-//		{
-//			List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
-//			sugerencias.add(sugerencia);
-//			List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);	
-//			modelo.addAttribute("estadisticas",estadisticas);
-//		}
-//		this.nuevoHecho();
-//
-//		return "userPriv";
-//	}
-//	
-//	public String nuevaComentario(Comentario comentario,Model modelo)
-//	{
-//		if(modelo.containsAttribute("estadisticas")){
-//			@SuppressWarnings("unchecked")
-//			List<Estadistica> estadisticas = (List<Estadistica>) modelo.asMap().get("estadisticas");
-//			for(Estadistica est : estadisticas){
-//				
-//				if(est.getIdSugerencia()==est.getIdSugerencia()){
-//					estatService.nuevoComentario(comentario, est);
-//				}
-//			}
-//			
-//			
-//			modelo.addAttribute("estadisticas",estadisticas);
-//		}
-//		
-//		this.nuevoHecho();
-//		return "userPriv";
-//	}
-//	
-//	@RequestMapping (path = "/register", method = RequestMethod.GET)
-//	public SseEmitter register() throws IOException {
-//	   // log.info("Registering a stream.");
-//
-//	    SseEmitter emitter = new SseEmitter();
-//
-//	    synchronized (sseEmitters) {
-//	        sseEmitters.add(emitter);
-//	    }
-//	    emitter.onCompletion(() -> sseEmitters.remove(emitter));
-//
-//	    return emitter;
-//	}
-//	
-//	
-//	public void nuevoHecho()
-//	{
-//		synchronized (sseEmitters) {
-//		    sseEmitters.forEach((SseEmitter emitter) -> {
-//		        try {
-//		            emitter.send(1);
-//		        } catch (IOException e) {
-//		            emitter.complete();
-//		            sseEmitters.remove(emitter);
-//		        }
-//		    });
-//		}
-//	}
 	
 }
