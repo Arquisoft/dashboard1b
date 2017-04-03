@@ -40,7 +40,7 @@
 			 var ac = document.getElementsByTagName("tr");
 			 for (let elem of ac){
 				 var celdas = elem.children;   
-				 if(celdas[0].textContent === "Titulo 1"){
+				 if(celdas[0].textContent === sugerence.title){
 					 var value = parseInt(celdas[1].textContent);		
 					 window.console.log(" El valor "+celdas[1].textContent+" el value "+value );
 
@@ -52,10 +52,11 @@
 			 var ac = document.getElementsByTagName("tr");
 			 for (let elem of ac){
 				 var celdas = elem.children;      
-				 if(celdas[0].textContent === "Titulo 1"){
-					 window.console.log(" El valor"+celdas[2].textContent);
+				 if(celdas[0].textContent === sugerence.title){
+					 var value = parseInt(celdas[2].textContent);		
+					 window.console.log(" El valor "+celdas[2].textContent+" el value "+value );
 				
-					 celdas[2].textContent = sugerence.votos;
+					 celdas[2].textContent = value+1;
 				    
 				     break;
 				    }

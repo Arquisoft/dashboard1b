@@ -23,6 +23,7 @@ import asw.DBManagement.model.Comentario;
 import asw.DBManagement.model.Estadistica;
 import asw.DBManagement.model.Sugerencia;
 import asw.DBManagement.persistence.CiudadanoRepository;
+import asw.DBManagement.persistence.SugerenciaRepository;
 import asw.estadistica.EstadisticaService;
 import asw.listeners.MessageListener.UpvoteEvent;
 
@@ -34,6 +35,9 @@ public class ControladorHTML {
 	
 	@Autowired
 	private CiudadanoRepository repositorio;
+	
+	@Autowired
+	private SugerenciaRepository sugRepos;
 	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -132,15 +136,15 @@ public class ControladorHTML {
 
 	@RequestMapping(path="/userPriv", method=RequestMethod.GET)
 	public String popularidadSugerencia(@RequestBody String parametros, Model modelo) {
-		List<Sugerencia> sugerencias = new ArrayList<>();
+		List<Sugerencia> sugerencias = (List<Sugerencia>) sugRepos.findAll();
 		//metodo que trae una lista usuarios
 		//Implementar metodo para sacar la lista de usuarios de una misma categoria
-		Date fechaActual = new Date();
-		sugerencias.add(new Sugerencia("Titulo 1", fechaActual, true, 50));
-		sugerencias.add(new Sugerencia("Titulo 2", fechaActual, false, 25));
-		sugerencias.add(new Sugerencia("Titulo 3", fechaActual, false, 4));
-		sugerencias.add(new Sugerencia("Titulo 4", fechaActual, true, 12));
-		System.out.println("Pasa por aqui ");
+//		Date fechaActual = new Date();
+//		sugerencias.add(new Sugerencia("Titulo 1", fechaActual, true, 50));
+//		sugerencias.add(new Sugerencia("Titulo 2", fechaActual, false, 25));
+//		sugerencias.add(new Sugerencia("Titulo 3", fechaActual, false, 4));
+//		sugerencias.add(new Sugerencia("Titulo 4", fechaActual, true, 12));
+//		System.out.println("Pasa por aqui ");
 
 		List<Estadistica> estadisticas = estatService.listaPopularidadSugerencia(sugerencias);
 		modelo.addAttribute("estadisticas",estadisticas);
@@ -168,7 +172,7 @@ public class ControladorHTML {
 	@RequestMapping( value = "/upvoteSugerence")
 	@EventListener
 	public void upvoteSugerence(UpvoteEvent data){
-		SseEventBuilder upvoteSugerenceEvent = SseEmitter.event().name("evento").data("{ \"tipo\": \"upvote\" , \"title\":\"" + data.getTitulo() + "\" , \"votes\": \""+ data.getVotos()+ "\" }");
+		SseEventBuilder upvoteSugerenceEvent = SseEmitter.event().name("evento").data("{ \"tipo\": \"upvote\" , \"title\":\"" + data.getTitulo() + "\" , \"votes\": \""+ (data.getVotos()+1)+ "\" }");
 		sendEvent(upvoteSugerenceEvent);
 	}
 	
