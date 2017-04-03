@@ -75,4 +75,14 @@ public void setCampos1() throws Exception{
 	est.setCampos(lista);
 	assertThat(est.getCampos().size()).isEqualTo(1);
 }
+
+@Test
+public void getValores() throws Exception{
+	assertThat(est.getValores()).isEqualTo(v);
+}
+@Test
+public void getValores1() throws Exception{
+	assertThat(est.getValores().size()).isEqualTo(2);
+}
+
 }
