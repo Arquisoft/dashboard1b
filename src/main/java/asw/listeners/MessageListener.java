@@ -48,7 +48,6 @@ public class MessageListener implements ApplicationEventPublisherAware{
 			Sugerencia sugerencia = mapper.readValue(data, Sugerencia.class);
 			logger.info("*****************\n"+"Sugerencia: "+sugerencia.getTitulo());
 			sugRep.save(sugerencia);
-			ControladorHTML.getSugerencias().add(sugerencia);
 			publisher.publishEvent(sugerencia);
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
@@ -69,7 +68,7 @@ public class MessageListener implements ApplicationEventPublisherAware{
     	try {
 			Comentario comentario = mapper.readValue(data, Comentario.class);
 			logger.info("*****************\n"+"Comentario: "+comentario.getTexto());
-			Comentario com =comentario;
+//			Comentario com =comentario;
 //			com.setSugerencia(null);
 //			comRep.save(com);
 			publisher.publishEvent(comentario);
@@ -96,7 +95,7 @@ public class MessageListener implements ApplicationEventPublisherAware{
 			//Sugerencia sug = sugRep.findOne(comentario.getSugerencia().getId());
 			//sug.setVotos(sug.getVotos()+1);
 			//sugRep.save(sug);
-			publisher.publishEvent(comentario.getSugerencia().getTitulo());
+			publisher.publishEvent(new UpvoteEvent(comentario.getSugerencia().getTitulo(), comentario.getSugerencia().getVotos()+1));
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,8 +109,18 @@ public class MessageListener implements ApplicationEventPublisherAware{
         logger.info("New message received: \"" + data + "\"");
     }
     
-    
-    
+    public class UpvoteEvent{
+    	private String titulo;
+    	private int votos;
+    	
+    	public UpvoteEvent(String titulo, int votos){
+    		this.titulo = titulo;
+    		this.votos = votos;
+    	}
+    	
+    	public String getTitulo(){ return this.titulo; }
+    	public int getVotos(){ return this.votos; }
+    }
     
     @Override
 	public void setApplicationEventPublisher(ApplicationEventPublisher eventPublisher) {
