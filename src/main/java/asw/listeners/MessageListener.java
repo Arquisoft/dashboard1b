@@ -70,7 +70,9 @@ public class MessageListener implements ApplicationEventPublisherAware{
     	try {
 			Comentario comentario = mapper.readValue(data, Comentario.class);
 			logger.info("*****************\n"+"Comentario: "+comentario.getTexto());
-			comRep.save(comentario);
+			Comentario com =comentario;
+			com.setSugerencia(null);
+			comRep.save(com);
 			publisher.publishEvent(comentario);
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
@@ -86,6 +88,32 @@ public class MessageListener implements ApplicationEventPublisherAware{
     	
         logger.info("New message received: \"" + data + "\"");
     }
+    
+    @KafkaListener( topics = KafkaTopics.UPVOTE_SUGERENCE)
+    public void listenApoyo(@Payload String data) {
+    	
+    	try {
+			Comentario comentario = mapper.readValue(data, Comentario.class);
+			logger.info("*****************\n"+"Apoyo: "+comentario.getSugerencia().getTitulo());
+			//Sugerencia sug = sugRep.findOne(comentario.getSugerencia().getId());
+			//sug.setVotos(sug.getVotos()+1);
+			//sugRep.save(sug);
+			publisher.publishEvent(comentario.getSugerencia().getTitulo());
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    	
+        logger.info("New message received: \"" + data + "\"");
+    }
+    
     
     @Override
 	public void setApplicationEventPublisher(ApplicationEventPublisher eventPublisher) {

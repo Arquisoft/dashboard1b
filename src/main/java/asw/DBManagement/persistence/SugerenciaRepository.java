@@ -7,4 +7,5 @@ import asw.DBManagement.model.Sugerencia;
 
 public interface SugerenciaRepository extends CrudRepository<Sugerencia, Long> {
 
+
 }
