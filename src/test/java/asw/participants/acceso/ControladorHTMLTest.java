@@ -50,11 +50,4 @@ public class ControladorHTMLTest {
     public void postHTML() throws Exception {
         this.mock.perform(post("/user","email=pablo@gmail.es","password=111111")).andExpect(status().isBadRequest());
     }
-
-    @Test
-    public void edad() {
-        //TODO This test is not correct :/
-        assertThat(controladorHTML.edad("1970-01-01")).isEqualTo(0);
-    }
-
 }
