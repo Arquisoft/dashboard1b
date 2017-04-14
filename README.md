@@ -13,3 +13,11 @@
 - Javier Valduvieco García (UO239884)
 
 - Alejandro Sáez Morollón (UO198755)
+
+- Sergio Gutiérrez Pérez (UO232575)
+
+- David García González (UO173944)
+
+- Oliver Gómez Tejerina (UO245899)
+
+- Alejandro Fernández Matia (UO232514)
