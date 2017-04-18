@@ -1,4 +1,4 @@
-package asw.model.key;
+package asw.dto.model.key;
 
 import java.io.Serializable;
 

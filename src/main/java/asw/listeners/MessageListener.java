@@ -1,7 +1,5 @@
 package asw.listeners;
 
-import asw.DBManagement.model.Comentario;
-import asw.DBManagement.persistence.ComentarioRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -13,8 +11,10 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import asw.DBManagement.model.Sugerencia;
-import asw.DBManagement.persistence.SugerenciaRepository;
+import asw.dto.DBManagement.model.Comentario;
+import asw.dto.DBManagement.model.Sugerencia;
+import asw.dto.DBManagement.persistence.ComentarioRepository;
+import asw.dto.DBManagement.persistence.SugerenciaRepository;
 import asw.participants.acceso.ControladorHTML;
 
 import java.io.IOException;

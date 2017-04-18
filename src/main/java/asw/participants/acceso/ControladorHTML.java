@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.SseEventBuilder;
 
-import asw.DBManagement.model.Ciudadano;
-import asw.DBManagement.model.Comentario;
-import asw.DBManagement.model.Estadistica;
-import asw.DBManagement.model.Sugerencia;
-import asw.DBManagement.persistence.CiudadanoRepository;
-import asw.DBManagement.persistence.SugerenciaRepository;
+import asw.dto.DBManagement.model.Ciudadano;
+import asw.dto.DBManagement.model.Comentario;
+import asw.dto.DBManagement.model.Estadistica;
+import asw.dto.DBManagement.model.Sugerencia;
+import asw.dto.DBManagement.persistence.CiudadanoRepository;
+import asw.dto.DBManagement.persistence.SugerenciaRepository;
 import asw.estadistica.EstadisticaService;
 import asw.listeners.MessageListener.UpvoteEvent;
 

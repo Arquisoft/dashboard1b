@@ -7,9 +7,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import asw.DBManagement.model.Comentario;
-import asw.DBManagement.model.Estadistica;
-import asw.DBManagement.model.Sugerencia;
+import asw.dto.DBManagement.model.Comentario;
+import asw.dto.DBManagement.model.Estadistica;
+import asw.dto.DBManagement.model.Sugerencia;
 import asw.estadistica.EstadisticaService;
 
 @Service("estadisticaService")

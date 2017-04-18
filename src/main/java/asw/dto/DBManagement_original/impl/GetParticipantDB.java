@@ -3,10 +3,9 @@ package asw.dto.DBManagement_original.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import asw.DBManagement_original.GetParticipant;
-import asw.DBManagement_original.model.Ciudadano;
-import asw.DBManagement_original.persistence.CiudadanoRepository;
-import asw.participants_original.acceso.ParticipantsLogin;
+import asw.dto.DBManagement_original.GetParticipant;
+import asw.dto.DBManagement_original.model.Ciudadano;
+import asw.dto.DBManagement_original.persistence.CiudadanoRepository;
 
 @Component
 public class GetParticipantDB implements GetParticipant{
